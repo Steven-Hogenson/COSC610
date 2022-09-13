@@ -16,8 +16,8 @@ public class MM {
      * @throws IOException throws exception if the specified files are not found
      */
     public static void main(String[] args) throws IOException {
-        List<ArrayList<Integer>> a = readFile("matrixA2.txt");
-        List<ArrayList<Integer>> b = readFile("matrixB2.txt");
+        List<ArrayList<Integer>> a = readFile("matrixA.txt");
+        List<ArrayList<Integer>> b = readFile("matrixB.txt");
         FileWriter fw = new FileWriter("matrixAnswer.txt");
         int[][] matrixA = new int[a.size()][a.get(0).size()];
         int[][] matrixB = new int[b.size()][b.get(0).size()];
