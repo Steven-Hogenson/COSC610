@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  * @author Steven Hogenson on 9/16/2022
- * @project COSC610
+ * project: COSC610 Arrays
  */
 public class MM {
     /**
@@ -23,7 +23,7 @@ public class MM {
         int colsB = getColumns(matrixB);
         //Condition to determine validity
         if (colsA != rowsB || colsB != rowsA) {
-            fw.write("Invalid matrix dimensions; cannot multiply");
+            System.out.println("Invalid matrix dimensions; cannot multiply");
             System.exit(0);
         }
         int[][] arrayA = new int[rowsA][colsA];
@@ -34,18 +34,15 @@ public class MM {
         int[][] arrayMultiply = new int[rowsA][colsB];
         for (int i = 0; i < rowsA; i++) {
             for (int j = 0; j < colsB; j++) {
-                for (int k = 0; k < colsA; k++) {
+                for (int k = 0; k < colsA; k++)
                     arrayMultiply[i][j] += arrayA[i][k] * arrayB[k][j];
-                }
             }
         }
         //Writing output to file
         for (int[] i : arrayMultiply) {
             for (int j : i) {
-                System.out.print(j + " ");
                 fw.write(j + " ");
             }
-            System.out.println();
             fw.write("\n");
         }
         fw.flush();
@@ -58,14 +55,14 @@ public class MM {
      * @param fileName the text file that contains a matrix
      * @return integer of the amount of rows
      */
-    public static int getRows(String fileName)  {
-        List<String> lines;
+    public static int getRows(String fileName) {
+        List<String> rows;
         try {
-            lines = Files.readAllLines(Paths.get(fileName));
+            rows = Files.readAllLines(Paths.get(fileName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return lines.size();
+        return rows.size();
     }
 
     /**
@@ -76,16 +73,16 @@ public class MM {
      * @throws FileNotFoundException if file not found
      */
     public static int getColumns(String fileName) throws FileNotFoundException {
-        int lineLength;
+        int columns;
         BufferedReader br = new BufferedReader((new FileReader(fileName)));
-        String line;
+        String columnTemp;
         try {
-            line = br.readLine();
+            columnTemp = br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        lineLength = line.replaceAll("\s+", "").length();
-        return lineLength;
+        columns = columnTemp.replaceAll("\s+", "").length();
+        return columns;
     }
 
     /**
