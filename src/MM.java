@@ -14,7 +14,6 @@ public class MM {
      * @throws IOException throws exception if the specified files are not found
      */
     public static void main(String[] args) throws IOException {
-        FileWriter fw = new FileWriter("matrixAnswer.txt");
         String matrixA = "matrixA.txt";
         String matrixB = "matrixB.txt";
         int rowsA = getRows(matrixA);
@@ -40,6 +39,7 @@ public class MM {
             }
         }
         //Writing output to file
+        FileWriter fw = new FileWriter("matrixAnswer.txt");
         for (int[] i : arrayMultiply) {
             for (int j : i) {
                 fw.write(j + " ");
