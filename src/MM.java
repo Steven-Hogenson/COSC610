@@ -34,8 +34,9 @@ public class MM {
         int[][] arrayMultiply = new int[rowsA][colsB];
         for (int i = 0; i < rowsA; i++) {
             for (int j = 0; j < colsB; j++) {
-                for (int k = 0; k < colsA; k++)
+                for (int k = 0; k < colsA; k++) {
                     arrayMultiply[i][j] += arrayA[i][k] * arrayB[k][j];
+                }
             }
         }
         //Writing output to file
