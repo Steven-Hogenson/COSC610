@@ -21,7 +21,7 @@ public class MM {
         int rowsB = getRows(matrixB);
         int colsB = getColumns(matrixB);
         //Condition to determine validity
-        if (colsA != rowsB || colsB != rowsA) {
+        if (colsA != rowsB) {
             System.out.println("Invalid matrix dimensions; cannot multiply");
             System.exit(0);
         }
