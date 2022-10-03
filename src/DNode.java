@@ -12,6 +12,7 @@ public class DNode {
         this.next = next;
     }
 
+    //Getters
     public Object getElement() {
         return element;
     }
@@ -24,6 +25,7 @@ public class DNode {
         return next;
     }
 
+    //Setters
     public void setElement(Object element) {
         this.element = element;
     }

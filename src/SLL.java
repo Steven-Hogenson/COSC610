@@ -16,6 +16,9 @@ public class SLL {
         this.head = head;
     }
 
+    /**
+     * Prints all Nodes in an SLL in order
+     */
     public void print() {
         Node current = head;
         while (current != null) {
@@ -25,6 +28,11 @@ public class SLL {
         System.out.println();
     }
 
+    /**
+     * Adds a Node to the end of an SLL
+     *
+     * @param n the Node to add at the end of an SLL
+     */
     public void add(Node n) {
         if (head == null) {
             head = n;
@@ -39,6 +47,9 @@ public class SLL {
 
     }
 
+    /**
+     * Removes the last Node of an SLL from the SLL
+     */
     public void remove() {
         if (head == null) {
             return;
@@ -54,6 +65,9 @@ public class SLL {
         }
     }
 
+    /**
+     * Reverses the order of elements in an SLL
+     */
     public void reverseList() {
         if (head == null) {
             return;

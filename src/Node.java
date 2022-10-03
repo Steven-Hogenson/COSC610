@@ -10,6 +10,7 @@ public class Node {
         this.next = next;
     }
 
+    //Getters
     public Object getElement() {
         return element;
     }
@@ -18,6 +19,7 @@ public class Node {
         return next;
     }
 
+    //Setters
     public void setElement(Object element) {
         this.element = element;
     }

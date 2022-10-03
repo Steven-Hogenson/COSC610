@@ -24,6 +24,9 @@ public class DList {
         this.trailer = trailer;
     }
 
+    /**
+     * Prints all elements of a DList in order
+     */
     public void print() {
         DNode current = header;
         while (current != null) {
@@ -33,6 +36,10 @@ public class DList {
         System.out.println();
     }
 
+    /**
+     * Inserts a DNode to the first position of a DList
+     * @param n the DNode to add to the first position of a DList
+     */
     public void addFirst(DNode n) {
         if (header == null) {
             header = n;
@@ -54,39 +61,39 @@ public class DList {
         trailer = n;
     }
 
-
-//TODO CLEAN UP
-
     /**
-     * @param n
+     * Deletes a specified DNode from a DList
+     * @param n the DNode to delete
      */
     public void remove(DNode n) {
-        if (header.getNext() == null && trailer.getPrevious() == null) {
-            header = null;
-            trailer = null;
-        } else {
-            DNode temp = header;
-
-            while (n.getElement() != temp.getElement()) {
-                temp = temp.getNext();
-            }
-
-            DNode pre = temp.getPrevious();
-            DNode pos = temp.getNext();
-
-            if (header == temp) {
-                pos.setPrevious(null);
-                header = pos;
-            } else if (trailer == temp) {
-                pre.setNext(null);
-                trailer = pre;
-            } else {
-                pre.setNext(pos);
-                pos.setPrevious(pre);
-            }
+        if (header == null || n == null) {
+            return;
         }
+
+        if (header == n) {
+            header = n.getNext();
+        }
+
+        if (trailer == n) {
+            trailer = n.getPrevious();
+        }
+
+        if (n.getNext() != null) {
+            DNode temp = n.getNext();
+            temp.setPrevious(n.getPrevious());
+        }
+
+        if (n.getPrevious() != null) {
+            DNode temp = n.getPrevious();
+            temp.setNext(n.getNext());
+        }
+
+
     }
 
+    /**
+     * Reverses the order of elements in a DList
+     */
     public void reverse() {
         DNode temp = null;
         DNode current = header;
