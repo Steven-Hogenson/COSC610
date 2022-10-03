@@ -28,7 +28,7 @@ public class DList {
      * Prints all elements of a DList in order
      */
     public void print() {
-        DNode current = header;
+        DNode current = getHeader();
         while (current != null) {
             System.out.print(current.getElement() + " ");
             current = current.getNext();
@@ -42,23 +42,23 @@ public class DList {
      */
     public void addFirst(DNode n) {
         if (header == null) {
-            header = n;
-            trailer = n;
+            setHeader(n);
+            setTrailer(n);
         } else {
-            n.setNext(header);
-            header.setPrevious(n);
-            header = n;
+            n.setNext(getHeader());
+            getHeader().setPrevious(n);
+            setHeader(n);
         }
     }
 
     public void addLast(DNode n) {
-        if (header == null) {
-            header = n;
+        if (getHeader() == null) {
+            setHeader(n);
         } else {
-            n.setPrevious(trailer);
-            trailer.setNext(n);
+            n.setPrevious(getTrailer());
+            getTrailer().setNext(n);
         }
-        trailer = n;
+        setTrailer(n);
     }
 
     /**
@@ -66,16 +66,16 @@ public class DList {
      * @param n the DNode to delete
      */
     public void remove(DNode n) {
-        if (header == null || n == null) {
+        if (getHeader() == null || n == null) {
             return;
         }
 
-        if (header == n) {
-            header = n.getNext();
+        if (getHeader() == n) {
+            setHeader(n.getNext());
         }
 
-        if (trailer == n) {
-            trailer = n.getPrevious();
+        if (getTrailer() == n) {
+            setTrailer(n.getPrevious());
         }
 
         if (n.getNext() != null) {

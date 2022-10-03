@@ -11,6 +11,19 @@ public class Test {
         s.add(a);
         s.add(b);
         s.add(c);
+        s.print();
+        s.remove();
+        s.remove();
+        s.remove();
+        s.print();
+        s.add(a);
+        s.add(b);
+        s.add(c);
+        s.print();
+        s.reverseList();
+        s.print();
+
+
 
         DNode a1 = new DNode(1, null, null);
         DNode b1 = new DNode(2, null, null);
@@ -21,10 +34,15 @@ public class Test {
         d.addFirst(a1);
         d.addLast(c1);
         d.print();
-
         d.remove(b1);
         d.remove(a1);
-        //d.remove(c1);
+        d.remove(c1);
+        d.print();
+        d.addFirst(b1);
+        d.addFirst(a1);
+        d.addLast(c1);
+        d.print();
+        d.reverse();
         d.print();
     }
 }
