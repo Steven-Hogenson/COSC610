@@ -32,19 +32,15 @@ public class VideoStore {
             System.exit(0);
         }
 
-        switch (typeOfList) {
-            case "SLL":
-                videoSLL = new SLL();
-                customerSLL = new SLL();
-                break;
-            case "DLL":
-                videoDList = new DList();
-                customerDList = new DList();
-                break;
-            default:
-                System.out.println("INVALID ARGUMENT");
-                System.exit(0);
-                break;
+        if (typeOfList.equals("SLL")) {
+            videoSLL = new SLL();
+            customerSLL = new SLL();
+        } else if (typeOfList.equals("DLL")) {
+            videoDList = new DList();
+            customerDList = new DList();
+        } else {
+            System.out.println("INVALID ARGUMENT");
+            System.exit(0);
         }
 
 
@@ -63,6 +59,7 @@ public class VideoStore {
             }
 
         }
+
     }
 
     static void printOptions() {
@@ -85,16 +82,14 @@ public class VideoStore {
     }
 
     static void setVideoInStore(String movieName, String id) {
-        switch (typeOfList) {
-            case "SLL":
-                videoSLL.add(new SLNode(new Video(movieName, id), null));
-                break;
-            case "DLL":
-                videoDList.addLast(new DNode(new Video(movieName, id), null, null));
-                break;
-            default:
-                break;
+        if (typeOfList.equals("SLL")) {
+            videoSLL.add(new SLNode(new Video(movieName, id), null));
+        } else if (typeOfList.equals("DLL")) {
+            videoDList.addLast(new DNode(new Video(movieName, id), null, null));
+        } else {
+            System.out.println("invalid");
         }
+
     }
 
     //TODO
@@ -111,13 +106,14 @@ public class VideoStore {
             System.out.println("invalid");
         }
     }
-//TODO add a method in SLL that deletes element with certain id
+
+    //TODO add a method in SLL that deletes element with certain id
     static void deleteCustomer(String id) {
         if (typeOfList.equals("SLL")) {
             SLNode temp = customerSLL.getHead();
             Customer custTemp = (Customer) temp.getElement();
-            while (temp.getNext() != null){
-                if(custTemp.getId().equals(id)){
+            while (temp.getNext() != null) {
+                if (custTemp.getId().equals(id)) {
                     //customerSLL.remove(custTemp);
                 }
             }
