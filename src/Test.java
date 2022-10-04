@@ -1,48 +1,25 @@
+import java.util.Arrays;
+
 /**
  * @author Steven Hogenson on 10/3/2022
  */
 public class Test {
-    public static void main(String args[]) {
-        Node a = new Node(1, null);
-        Node b = new Node(2, null);
-        Node c = new Node(3, null);
+    public static void main(String[] args) {
+        int[][][] x = {{{1, 2}, {3, 4}}, {{5, 6}, {7, 8}}};
 
-        SLL s = new SLL();
-        s.add(a);
-        s.add(b);
-        s.add(c);
-        s.print();
-        s.remove();
-        s.remove();
-        s.remove();
-        s.print();
-        s.add(a);
-        s.add(b);
-        s.add(c);
-        s.print();
-        s.reverseList();
-        s.print();
+        int[][][] y = new int[2][2][];
 
+        y[0] = x[0].clone();
+        System.out.println(Arrays.deepToString(y));
 
+        y[1][1] = x[1][1].clone();
+        System.out.println(Arrays.deepToString(y));
+        x[0][0][0] = 100;
 
-        DNode a1 = new DNode(1, null, null);
-        DNode b1 = new DNode(2, null, null);
-        DNode c1 = new DNode(3, null, null);
-
-        DList d = new DList();
-        d.addFirst(b1);
-        d.addFirst(a1);
-        d.addLast(c1);
-        d.print();
-        d.remove(b1);
-        d.remove(a1);
-        d.remove(c1);
-        d.print();
-        d.addFirst(b1);
-        d.addFirst(a1);
-        d.addLast(c1);
-        d.print();
-        d.reverse();
-        d.print();
+        x[1][1][1] = 200;
+        System.out.println(x[0][0][1]);
+        System.out.println("x = "+Arrays.deepToString(x));
+        System.out.println("y = "+Arrays.deepToString(y));
+        System.out.println(y[0][0][0] + " " + y[1][1][1]);
     }
 }

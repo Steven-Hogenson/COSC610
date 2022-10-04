@@ -1,11 +1,13 @@
+package VideoStoreProject;
+
 /**
  * @author Steven Hogenson on 10/3/2022
  */
-public class Node {
+public class SLNode {
     private Object element;
-    private Node next;
+    private SLNode next;
 
-    public Node(Object element, Node next) {
+    public SLNode(Object element, SLNode next) {
         this.element = element;
         this.next = next;
     }
@@ -15,7 +17,7 @@ public class Node {
         return element;
     }
 
-    public Node getNext() {
+    public SLNode getNext() {
         return next;
     }
 
@@ -24,7 +26,7 @@ public class Node {
         this.element = element;
     }
 
-    public void setNext(Node next) {
+    public void setNext(SLNode next) {
         this.next = next;
     }
 }
