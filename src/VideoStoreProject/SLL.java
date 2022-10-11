@@ -122,10 +122,10 @@ public class SLL {
             if (v.getId().equals(id)) {
                 return v;
             }
-            if (current.getNext() != null) {
-                current = current.getNext();
-                v = (Video) current.getElement();
-            }
+
+            current = current.getNext();
+            v = (Video) current.getElement();
+
         }
         return null;
     }
@@ -142,10 +142,9 @@ public class SLL {
             if (c.getId().equals(id)) {
                 return c;
             }
-            if(current.getNext()!=null) {
-                current = current.getNext();
-                c = (Customer) current.getElement();
-            }
+            current = current.getNext();
+            c = (Customer) current.getElement();
+
         }
         return null;
     }

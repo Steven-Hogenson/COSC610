@@ -102,6 +102,17 @@ public class VideoStore {
                     case 9:
                         printAllVideos();
                         break;
+                    case 10:
+                        //printInStore();
+                        break;
+                    case 11:
+                        printRented();
+                        break;
+                    case 12:
+                        System.out.print("Enter customer ID: ");
+                        String customerID2 = sc.nextLine().trim();
+                        getCustomer(customerID2).printVideos();
+                        break;
                     case 13:
                         System.exit(0);
                         break;
@@ -200,22 +211,25 @@ public class VideoStore {
         return String.valueOf(customerIdCounter++);
     }
 
-    private static void printAtElement(int id) {
-
-    }
 
     static void checkOutVideo(String customerID, String videoID) {
         getCustomer(customerID).addRentSLL(getVideo(videoID));
-        deleteVideo(videoID);
+        //deleteVideo(videoID);
         //videoSLL.deleteVideo(videoID);
     }
 
-    static void checkInVideo(String customerID, String videoID){
+    static void checkInVideo(String customerID, String videoID) {
         getCustomer(customerID).removeRentSLL(getVideo(videoID));
         videoSLL.add(new SLNode(new Video(getVideo(videoID).getTitle(), getVideo(videoID).getId()), null));
 
     }
 
+    static void printRented() {
+        for (int i = 0; i < customerIdCounter; i++) {
+            getCustomer(String.valueOf(i)).printVideos();
+        }
+
+    }
 
 }
 

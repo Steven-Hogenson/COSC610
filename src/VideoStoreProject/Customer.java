@@ -56,6 +56,7 @@ public class Customer {
 
     public void printVideos() {
         if (rentVideoSLL != null) {
+            System.out.print("Checked out videos: ");
             rentVideoSLL.print();
         }
         if (rentVideoDList != null) {
