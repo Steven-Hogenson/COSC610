@@ -206,7 +206,7 @@ public class VideoStore {
 
     static void checkOutVideo(String customerID, String videoID) {
         getCustomer(customerID).addRentSLL(getVideo(videoID));
-        //deleteVideo(videoID);
+        deleteVideo(videoID);
         //videoSLL.deleteVideo(videoID);
     }
 

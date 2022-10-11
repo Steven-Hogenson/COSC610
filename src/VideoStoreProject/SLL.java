@@ -73,11 +73,11 @@ public class SLL {
         SLNode current = getHead();
         SLNode temp = null;
         Video v = (Video) current.getElement();
-        if (current != null && v.getId().equals(id)) {
+        if (v != null && v.getId().equals(id)) {
             setHead(current.getNext());
             return;
         }
-        while (current != null && !v.getId().equals(id)) {
+        while (v != null && !v.getId().equals(id)) {
             temp = current;
             current = current.getNext();
             v = (Video) current.getElement();
@@ -88,36 +88,80 @@ public class SLL {
         }
     }
 
-    public Video getVideo(String id) {
-        SLNode current = getHead();
-        SLNode temp = null;
-        Video v = (Video) current.getElement();
-        if (current != null && v.getId().equals(id)) {
-            setHead(current.getNext());
+    /*
+        public Video getVideo(String id) {
+            SLNode current = getHead();
+            SLNode temp = null;
+            Video v = (Video) current.getElement();
+            if (v != null && v.getId().equals(id)) {
+                setHead(current.getNext());
+                return v;
+            }
+            while (v != null&& !v.getId().equals(id)) {
+                temp = current;
+                current = current.getNext();
+                v = (Video) current.getElement();
+            }
+
+            if (temp != null) {
+                temp.setNext(current.getNext());
+            }
             return v;
-        }
-        while (current != null&& !v.getId().equals(id)) {
-            temp = current;
-            current = current.getNext();
-            v = (Video) current.getElement();
+
         }
 
-        if (temp != null) {
-            temp.setNext(current.getNext());
+     */
+    public Video getVideo(String id) {
+        if (getHead() == null) {
+            return null;
         }
-        return v;
 
+        SLNode current = head;
+        Video v = (Video) current.getElement();
+        while (v != null) {
+            if (v.getId().equals(id)) {
+                return v;
+            }
+            if (current.getNext() != null) {
+                current = current.getNext();
+                v = (Video) current.getElement();
+            }
+        }
+        return null;
     }
-//TODO make this and getVideo actually work, rn it deletes
+
+
+    public Customer getCustomer(String id) {
+        if (getHead() == null) {
+            return null;
+        }
+
+        SLNode current = head;
+        Customer c = (Customer) current.getElement();
+        while (c != null) {
+            if (c.getId().equals(id)) {
+                return c;
+            }
+            if(current.getNext()!=null) {
+                current = current.getNext();
+                c = (Customer) current.getElement();
+            }
+        }
+        return null;
+    }
+
+    /*
+
+//make this and getVideo actually work, rn it deletes
     public Customer getCustomer(String id) {
         SLNode current = getHead();
         SLNode temp = null;
         Customer c = (Customer) current.getElement();
-        if (current != null && c.getId().equals(id)) {
+        if (c != null && c.getId().equals(id)) {
             setHead(current.getNext());
             return c;
         }
-        while (current != null && !c.getId().equals(id)) {
+        while (c != null && !c.getId().equals(id)) {
             temp = current;
             current = current.getNext();
             c = (Customer) current.getElement();
@@ -129,15 +173,17 @@ public class SLL {
         return c;
     }
 
+
+     */
     public void deleteCustomer(String id) {
         SLNode current = getHead();
         SLNode temp = null;
         Customer c = (Customer) current.getElement();
-        if (current != null && c.getId().equals(id)) {
+        if (c != null && c.getId().equals(id)) {
             setHead(current.getNext());
             return;
         }
-        while (current != null && !c.getId().equals(id)) {
+        while (c != null && !c.getId().equals(id)) {
             temp = current;
             current = current.getNext();
             c = (Customer) current.getElement();
