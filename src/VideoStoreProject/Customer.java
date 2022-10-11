@@ -6,7 +6,8 @@ package VideoStoreProject;
 public class Customer {
     private String name;
     private String id;
-    private Video rentVideo;
+    private SLL rentVideoSLL;
+    private DList rentVideoDList;
 
     public Customer(String name, String id) {
         this.name = name;
@@ -21,20 +22,45 @@ public class Customer {
         return id;
     }
 
-    public Video getRentVideo() {
-        return rentVideo;
+
+    public SLL getRentVideoSLL() {
+        return rentVideoSLL;
     }
 
-    public void setRentVideo(Video rentVideo) {
-        this.rentVideo = rentVideo;
+    public DList getRentVideoDList() {
+        return rentVideoDList;
     }
+
+    public void addRentSLL(Video v) {
+        rentVideoSLL = new SLL();
+        rentVideoSLL.add(new SLNode(new Video(v.getTitle(), v.getId()), null));
+    }
+
+    public void removeRentSLL(Video v){
+        rentVideoSLL.deleteVideo(v.getId());
+    }
+
+    public void addRentDList(Video v) {
+        rentVideoDList = new DList();
+        rentVideoDList.addLast(new DNode(new Video(v.getTitle(), v.getId()), null, null));
+    }
+
 
     @Override
     public String toString() {
         return "Customer{" +
                 "name='" + name + '\'' +
                 ", id='" + id + '\'' +
-                ", rentVideo=" + rentVideo +
                 '}';
+    }
+
+    public void printVideos() {
+        if (rentVideoSLL != null) {
+            rentVideoSLL.print();
+        }
+        if (rentVideoDList != null) {
+            rentVideoDList.print();
+        }
+
     }
 }

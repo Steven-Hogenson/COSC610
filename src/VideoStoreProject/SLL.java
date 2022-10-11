@@ -1,5 +1,7 @@
 package VideoStoreProject;
 
+import java.util.NoSuchElementException;
+
 /**
  * @author Steven Hogenson on 10/3/2022
  */
@@ -24,7 +26,7 @@ public class SLL {
     public void print() {
         SLNode current = getHead();
         while (current != null) {
-            System.out.print(current.getElement() + " ");
+            System.out.println(current.getElement());
             current = current.getNext();
         }
         System.out.println();
@@ -67,6 +69,85 @@ public class SLL {
         }
     }
 
+    public void deleteVideo(String id) {
+        SLNode current = getHead();
+        SLNode temp = null;
+        Video v = (Video) current.getElement();
+        if (v.getId().equals(id)) {
+            setHead(current.getNext());
+            return;
+        }
+        while (!v.getId().equals(id)) {
+            temp = current;
+            current = current.getNext();
+            v = (Video) current.getElement();
+        }
+
+        if (temp != null) {
+            temp.setNext(current.getNext());
+        }
+    }
+
+    public Video getVideo(String id) {
+        SLNode current = getHead();
+        SLNode temp = null;
+        Video v = (Video) current.getElement();
+        if (v.getId().equals(id)) {
+            setHead(current.getNext());
+            return v;
+        }
+        while (!v.getId().equals(id)) {
+            temp = current;
+            current = current.getNext();
+            v = (Video) current.getElement();
+        }
+
+        if (temp != null) {
+            temp.setNext(current.getNext());
+        }
+        return v;
+
+    }
+
+    public Customer getCustomer(String id) {
+        SLNode current = getHead();
+        SLNode temp = null;
+        Customer c = (Customer) current.getElement();
+        if (c.getId().equals(id)) {
+            setHead(current.getNext());
+            return c;
+        }
+        while (!c.getId().equals(id)) {
+            temp = current;
+            current = current.getNext();
+            c = (Customer) current.getElement();
+        }
+
+        if (temp != null) {
+            temp.setNext(current.getNext());
+        }
+        return c;
+    }
+
+    public void deleteCustomer(String id) {
+        SLNode current = getHead();
+        SLNode temp = null;
+        Customer c = (Customer) current.getElement();
+        if (c.getId().equals(id)) {
+            setHead(current.getNext());
+            return;
+        }
+        while (!c.getId().equals(id)) {
+            temp = current;
+            current = current.getNext();
+            c = (Customer) current.getElement();
+        }
+
+        if (temp != null) {
+            temp.setNext(current.getNext());
+        }
+    }
+
     /**
      * Reverses the order of elements in an SLL
      */
@@ -85,6 +166,7 @@ public class SLL {
         }
         setHead(previous);
     }
+
 /*
     public static void main(String[] args) {
         SLNode a = new SLNode(1, null);
