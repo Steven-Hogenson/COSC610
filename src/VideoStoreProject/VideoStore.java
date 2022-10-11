@@ -89,6 +89,13 @@ public class VideoStore {
                         String vidID = sc.nextLine().trim();
                         checkOutVideo(custID, vidID);
                         break;
+                    case 7:
+                        System.out.print("Enter customer ID to check in: ");
+                        String custoID = sc.nextLine().trim();
+                        System.out.print("Enter video ID to check in: ");
+                        String videID = sc.nextLine().trim();
+                        checkInVideo(custoID, videID);
+                        break;
                     case 8:
                         printAllCustomers();
                         break;
@@ -199,11 +206,14 @@ public class VideoStore {
 
     static void checkOutVideo(String customerID, String videoID) {
         getCustomer(customerID).addRentSLL(getVideo(videoID));
-        deleteVideo(videoID);
+        //deleteVideo(videoID);
+        //videoSLL.deleteVideo(videoID);
     }
 
     static void checkInVideo(String customerID, String videoID){
         getCustomer(customerID).removeRentSLL(getVideo(videoID));
+        videoSLL.add(new SLNode(new Video(getVideo(videoID).getTitle(), getVideo(videoID).getId()), null));
+
     }
 
 
