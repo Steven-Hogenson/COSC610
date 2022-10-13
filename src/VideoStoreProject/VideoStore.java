@@ -2,20 +2,15 @@ package VideoStoreProject;
 
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.UUID;
 
 /**
  * @author Steven Hogenson on 10/4/2022
  */
 public class VideoStore {
-    private static SLNode n;
-    private Video videoInStore;
-    private Customer customer;
+
     private static String typeOfList = "";
-    private static final int videoCount = 0;
-    private static final int customerCount = 0;
-    private static final int requestCount = 0;
     static SLL videoSLL = new SLL();
+    static SLL storeVideosSLL = new SLL();
     static SLL customerSLL = new SLL();
     static DList videoDList = new DList();
     static DList customerDList = new DList();
@@ -54,98 +49,92 @@ public class VideoStore {
         //typeOfList = sc.nextLine();
         typeOfList = "SLL";
         int scanInput;
-        if (args.length == 1 || !typeOfList.equals("")) {
-            while (true) {
-                printOptions();
-                scanInput = Integer.parseInt(sc.nextLine());
+        while (true) {
+            printOptions();
+            scanInput = Integer.parseInt(sc.nextLine());
 
-                switch (scanInput) {
-                    case 1:
-                        System.out.print("Enter the video name to add: ");
-                        String videoName = sc.nextLine().trim();
-                        setVideoInStore(videoName, createVideoID());
-                        break;
-                    case 2:
-                        System.out.print("Enter ID of video to delete: ");
-                        String videoID = sc.nextLine().trim();
-                        deleteVideo(videoID);
-                        break;
-                    case 3:
-                        System.out.print("Enter customer's name to add: ");
-                        String customerName = sc.nextLine().trim();
-                        addCustomer(customerName, createCustomerID());
-                        break;
-                    case 4:
-                        System.out.print("Enter customer id to delete: ");
-                        String customerID = sc.nextLine().trim();
-                        deleteCustomer(customerID);
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        System.out.print("Enter customer ID to check out: ");
-                        String custID = sc.nextLine().trim();
-                        System.out.print("Enter video ID to check out: ");
-                        String vidID = sc.nextLine().trim();
-                        checkOutVideo(custID, vidID);
-                        break;
-                    case 7:
-                        System.out.print("Enter customer ID to check in: ");
-                        String custoID = sc.nextLine().trim();
-                        System.out.print("Enter video ID to check in: ");
-                        String videID = sc.nextLine().trim();
-                        checkInVideo(custoID, videID);
-                        break;
-                    case 8:
-                        printAllCustomers();
-                        break;
-                    case 9:
-                        printAllVideos();
-                        break;
-                    case 10:
-                        //printInStore();
-                        break;
-                    case 11:
-                        printRented();
-                        break;
-                    case 12:
-                        System.out.print("Enter customer ID: ");
-                        String customerID2 = sc.nextLine().trim();
-                        getCustomer(customerID2).printVideos();
-                        break;
-                    case 13:
-                        System.exit(0);
-                        break;
-
+            switch (scanInput) {
+                case 1 -> {
+                    System.out.print("Enter title of video: ");
+                    String videoName = sc.nextLine().trim();
+                    setVideoInStore(videoName, createVideoID());
                 }
+                case 2 -> {
+                    System.out.print("Enter ID of video to delete: ");
+                    String videoID = sc.nextLine().trim();
+                    deleteVideo(videoID);
+                }
+                case 3 -> {
+                    System.out.print("Enter name of customer: ");
+                    String customerName = sc.nextLine().trim();
+                    addCustomer(customerName, createCustomerID());
+                }
+                case 4 -> {
+                    System.out.print("Enter customer id to delete: ");
+                    String customerID = sc.nextLine().trim();
+                    deleteCustomer(customerID);
+                }
+                case 5 -> {
+                    System.out.print("Enter video id to check for: ");
+                    String vidID3 = sc.nextLine().trim();
+                    System.out.println(checkInStore(vidID3));
+                }
+                case 6 -> {
+                    System.out.print("Enter ID of customer: ");
+                    String custID = sc.nextLine().trim();
+                    System.out.print("Enter ID of video: ");
+                    String vidID = sc.nextLine().trim();
+                    checkOutVideo(custID, vidID);
+                }
+                case 7 -> {
+                    System.out.print("Enter ID of customer: ");
+                    String custoID = sc.nextLine().trim();
+                    System.out.print("Enter ID of video: ");
+                    String videID = sc.nextLine().trim();
+                    checkInVideo(custoID, videID);
+                }
+                case 8 -> printAllCustomers();
+                case 9 -> printAllVideos();
+                case 10 -> printInStore2();
+                case 11 -> {
+                    System.out.println("Checked out videos: ");
+                    printRented();
+                }
+                case 12 -> {
+                    System.out.print("Enter ID of customer: ");
+                    String customerID2 = sc.nextLine().trim();
+                    getCustomer(customerID2).printVideos();
+                }
+                case 13 -> System.exit(0);
             }
-
         }
 
     }
 
     static void printOptions() {
-        System.out.println("===============================\n" +
-                "Select one of the following:\n" +
-                "1: To add a video\n" +
-                "2: To delete a video\n" +
-                "3: To add a customer\n" +
-                "4: To delete a customer\n" +
-                "5: To check if a particular video is in store\n" +
-                "6: To check out a video\n" +
-                "7: To check in a video\n" +
-                "8: To print all customers\n" +
-                "9: To print all videos\n" +
-                "10: To print in store videos\n" +
-                "11: To print all rented videos\n" +
-                "12: To print the videos rented by a customer\n" +
-                "13: To exit\n" +
-                "===============================");
+        System.out.println("""
+                ===============================
+                Select one of the following:
+                1: To add a video
+                2: To delete a video
+                3: To add a customer
+                4: To delete a customer
+                5: To check if a particular video is in store
+                6: To check out a video
+                7: To check in a video
+                8: To print all customers
+                9: To print all videos
+                10: To print in store videos
+                11: To print all rented videos
+                12: To print the videos rented by a customer
+                13: To exit
+                ===============================""");
     }
 
     static void setVideoInStore(String movieName, String id) {
         if (typeOfList.equals("SLL")) {
             videoSLL.add(new SLNode(new Video(movieName, id), null));
+            storeVideosSLL.add((new SLNode(new Video(movieName, id), null)));
         } else if (typeOfList.equals("DLL")) {
             videoDList.addLast(new DNode(new Video(movieName, id), null, null));
 
@@ -213,20 +202,70 @@ public class VideoStore {
 
 
     static void checkOutVideo(String customerID, String videoID) {
-        getCustomer(customerID).addRentSLL(getVideo(videoID));
-        //deleteVideo(videoID);
-        //videoSLL.deleteVideo(videoID);
+
+        if (getCustomer(customerID).getRentVideoSLL() == null) {
+            if (storeVideosSLL.deleteVideo(videoID)) {
+                getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
+                //getVideo(videoID).setAvailable(false);
+
+            }
+            //storeVideosSLL.deleteVideo(videoID);
+            //getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
+        } else {
+            if (storeVideosSLL.deleteVideo(videoID)) {
+                //storeVideosSLL.deleteVideo(videoID);
+                getCustomer(customerID).addRentSLL(getVideo(videoID));
+                //getVideo(videoID).setAvailable(false);
+
+            }
+        }
+
+
     }
 
     static void checkInVideo(String customerID, String videoID) {
         getCustomer(customerID).removeRentSLL(getVideo(videoID));
-        videoSLL.add(new SLNode(new Video(getVideo(videoID).getTitle(), getVideo(videoID).getId()), null));
+        storeVideosSLL.add((new SLNode(new Video(getVideo(videoID).getTitle(), videoID), null)));
+        //getVideo(videoID).setAvailable(true);
+        //videoSLL.add(new SLNode(new Video(getVideo(videoID).getTitle(), getVideo(videoID).getId()), null));
 
     }
 
     static void printRented() {
         for (int i = 0; i < customerIdCounter; i++) {
+            //System.out.println(getCustomer(String.valueOf(i)).getRentVideoSLL().);
             getCustomer(String.valueOf(i)).printVideos();
+        }
+
+    }
+
+    static void printInStore2() {
+        storeVideosSLL.print();
+    }
+
+
+    static boolean checkInStore(String id) {
+        SLNode current = storeVideosSLL.getHead();
+        Video v;
+        if (current == null) {
+            return false;
+        } else {
+            v = (Video) current.getElement();
+        }
+        while (true) {
+            if (Objects.equals(v.getId(), id)) {
+                return true;
+            } else {
+                //v = (Video) current.getElement();
+                current = current.getNext();
+                if (current != null) {
+                    v = (Video) current.getElement();
+                } else {
+                    return false;
+                }
+                //v = current.getNext().getElement();
+            }
+            //v = (Video) current.getElement();
         }
 
     }

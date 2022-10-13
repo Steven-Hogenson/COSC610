@@ -1,18 +1,20 @@
 package VideoStoreProject;
 
-import java.util.NoSuchElementException;
-
 /**
  * @author Steven Hogenson on 10/3/2022
  */
 public class SLL {
     private SLNode head;
+    private int size = 0;
 
     public SLL() {
         head = null;
     }
 
     public SLNode getHead() {
+        if (head == null) {
+            return null;
+        }
         return head;
     }
 
@@ -28,6 +30,7 @@ public class SLL {
         while (current != null) {
             System.out.println(current.getElement());
             current = current.getNext();
+            //size++;
         }
         System.out.println();
     }
@@ -47,7 +50,6 @@ public class SLL {
             }
             current.setNext(n);
         }
-
 
     }
 
@@ -69,48 +71,37 @@ public class SLL {
         }
     }
 
-    public void deleteVideo(String id) {
+    public boolean deleteVideo(String id) {
         SLNode current = getHead();
         SLNode temp = null;
         Video v = (Video) current.getElement();
         if (v != null && v.getId().equals(id)) {
             setHead(current.getNext());
-            return;
+            System.out.println("SUCCESS");
+            return true;
         }
         while (v != null && !v.getId().equals(id)) {
             temp = current;
             current = current.getNext();
-            v = (Video) current.getElement();
+            //remove if statement if issue
+            if (current != null) {
+                v = (Video) current.getElement();
+            } else {
+                System.out.println("Unable to perform task.");
+                return false;
+            }
         }
 
         if (temp != null) {
             temp.setNext(current.getNext());
         }
+        System.out.println("SUCCESS");
+        return true;
+
     }
 
-    /*
-        public Video getVideo(String id) {
-            SLNode current = getHead();
-            SLNode temp = null;
-            Video v = (Video) current.getElement();
-            if (v != null && v.getId().equals(id)) {
-                setHead(current.getNext());
-                return v;
-            }
-            while (v != null&& !v.getId().equals(id)) {
-                temp = current;
-                current = current.getNext();
-                v = (Video) current.getElement();
-            }
 
-            if (temp != null) {
-                temp.setNext(current.getNext());
-            }
-            return v;
 
-        }
-
-     */
     public Video getVideo(String id) {
         if (getHead() == null) {
             return null;
@@ -122,9 +113,11 @@ public class SLL {
             if (v.getId().equals(id)) {
                 return v;
             }
+            //
 
             current = current.getNext();
             v = (Video) current.getElement();
+
 
         }
         return null;
@@ -237,6 +230,22 @@ public class SLL {
         s.print();
 
     }
+
+ */
+
+/*
+    public static SLNode cloneLinkedList(SLNode head) {
+        SLNode oldCurrent = head;
+        SLNode newHead = new SLNode(oldCurrent.getElement(), null);
+        SLNode newCurrent = newHead;
+        while ((oldCurrent = oldCurrent.getNext()) != null) {
+            //newCurrent.next = new SLNode(oldCurrent.element, null);
+            newCurrent.setNext(new SLNode(oldCurrent.getElement(), null));
+            newCurrent = newCurrent.getNext();
+        }
+        return newHead;
+    }
+
 
  */
 }
