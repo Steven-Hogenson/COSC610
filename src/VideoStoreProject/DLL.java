@@ -91,43 +91,6 @@ public class DLL {
 
     }
 
-    public void delteByKey(String id) {
-        DNode temp = getHeader();
-        DNode temp1 = null;
-        while (!temp.getElement().equals(id)) {
-
-        }
-    }
-
-    public boolean deleteVideo(String id) {
-        DNode current = getHeader();
-        DNode temp = null;
-        Video v = (Video) current.getElement();
-        if (v != null && v.getId().equals(id)) {
-            setHeader(current.getNext());
-            return true;
-        }
-        while (v != null && !v.getId().equals(id)) {
-            temp = current;
-            current = current.getNext();
-            //current.setPrevious(temp);
-            //remove if statement if issue
-            if (current != null) {
-                v = (Video) current.getElement();
-                current.setPrevious(temp);
-            } else {
-                System.out.println("Unable to perform task.");
-                return false;
-            }
-        }
-
-        if (temp != null) {
-            temp.setNext(current.getNext());
-        }
-
-        return true;
-
-    }
 
 
     public boolean deleteDLL(String id, Object o) {

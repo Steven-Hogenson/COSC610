@@ -164,12 +164,10 @@ public class VideoStore {
             case "SLL" -> {
                 storeVideosSLL.deleteVideo(id);
                 videoSLL.deleteVideo(id);
-                break;
             }
             case "DLL" -> {
                 storeVideoDLL.deleteDLL(id, v);
                 videoDLL.deleteDLL(id, v);
-                break;
             }
         }
     }
