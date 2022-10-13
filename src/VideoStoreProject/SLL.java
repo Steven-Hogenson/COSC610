@@ -139,31 +139,6 @@ public class SLL {
         return null;
     }
 
-    /*
-
-//make this and getVideo actually work, rn it deletes
-    public Customer getCustomer(String id) {
-        SLNode current = getHead();
-        SLNode temp = null;
-        Customer c = (Customer) current.getElement();
-        if (c != null && c.getId().equals(id)) {
-            setHead(current.getNext());
-            return c;
-        }
-        while (c != null && !c.getId().equals(id)) {
-            temp = current;
-            current = current.getNext();
-            c = (Customer) current.getElement();
-        }
-
-        if (temp != null) {
-            temp.setNext(current.getNext());
-        }
-        return c;
-    }
-
-
-     */
     public void deleteCustomer(String id) {
         SLNode current = getHead();
         SLNode temp = null;
@@ -202,47 +177,4 @@ public class SLL {
         setHead(previous);
     }
 
-/*
-    public static void main(String[] args) {
-        SLNode a = new SLNode(1, null);
-        SLNode b = new SLNode(2, null);
-        SLNode c = new SLNode(3, null);
-        SLL s = new SLL();
-        s.print();
-        s.add(a);
-        s.add(b);
-        s.add(c);
-        s.print();
-        s.remove();
-        s.print();
-        s.remove();
-        s.print();
-        s.remove();
-        s.print();
-        s.add(a);
-        s.add(b);
-        s.add(c);
-        s.print();
-        s.reverse();
-        s.print();
-
-    }
-
- */
-
-/*
-    public static SLNode cloneLinkedList(SLNode head) {
-        SLNode oldCurrent = head;
-        SLNode newHead = new SLNode(oldCurrent.getElement(), null);
-        SLNode newCurrent = newHead;
-        while ((oldCurrent = oldCurrent.getNext()) != null) {
-            //newCurrent.next = new SLNode(oldCurrent.element, null);
-            newCurrent.setNext(new SLNode(oldCurrent.getElement(), null));
-            newCurrent = newCurrent.getNext();
-        }
-        return newHead;
-    }
-
-
- */
 }

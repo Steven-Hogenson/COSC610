@@ -7,7 +7,7 @@ public class Customer {
     private final String name;
     private final String id;
     private SLL rentVideoSLL;
-    private DList rentVideoDList;
+    private DLL rentVideoDLL;
 
     public Customer(String name, String id) {
         this.name = name;
@@ -31,8 +31,11 @@ public class Customer {
     }
 
 
-    public DList getRentVideoDList() {
-        return rentVideoDList;
+    public DLL getRentVideoDLL() {
+        if (rentVideoDLL == null) {
+            return null;
+        }
+        return rentVideoDLL;
     }
 
     public void addRentSLL(Video v) {
@@ -49,9 +52,18 @@ public class Customer {
         rentVideoSLL.deleteVideo(v.getId());
     }
 
-    public void addRentDList(Video v) {
-        rentVideoDList = new DList();
-        rentVideoDList.addLast(new DNode(new Video(v.getTitle(), v.getId()), null, null));
+    public void addRentDLL(Video v) {
+        rentVideoDLL = new DLL();
+        rentVideoDLL.addLast(new DNode(new Video(v.getTitle(), v.getId()), null, null));
+    }
+
+    public void createAndAddRentDLL(Video v) {
+        rentVideoDLL = new DLL();
+        rentVideoDLL.addLast(new DNode(new Video(v.getTitle(), v.getId()), null, null));
+    }
+
+    public void removeRentDLL(Video v) {
+        rentVideoDLL.deleteDLL(v.getId(), v);
     }
 
     /*
@@ -72,9 +84,8 @@ public class Customer {
     public void printVideos() {
         if (rentVideoSLL != null) {
             rentVideoSLL.print();
-        }
-        if (rentVideoDList != null) {
-            rentVideoDList.print();
+        } else if (rentVideoDLL != null) {
+            rentVideoDLL.print();
         }
 
     }

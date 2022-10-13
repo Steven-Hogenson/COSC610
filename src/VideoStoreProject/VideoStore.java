@@ -12,10 +12,13 @@ public class VideoStore {
     static SLL videoSLL = new SLL();
     static SLL storeVideosSLL = new SLL();
     static SLL customerSLL = new SLL();
-    static DList videoDList = new DList();
-    static DList customerDList = new DList();
+    static DLL videoDLL = new DLL();
+    static DLL storeVideoDLL = new DLL();
+    static DLL customerDLL = new DLL();
     private static long videoIdCounter = 0;
     private static long customerIdCounter = 0;
+    private static final Video v = new Video("", "");
+    private static final Customer c = new Customer("", "");
 
     public static void main(String[] args) {
 
@@ -47,7 +50,7 @@ public class VideoStore {
          */
         System.out.print("Type of list... SLL or DLL: ");
         //typeOfList = sc.nextLine();
-        typeOfList = "SLL";
+        typeOfList = "DLL";
         int scanInput;
         while (true) {
             printOptions();
@@ -83,11 +86,16 @@ public class VideoStore {
                     System.out.print("Enter video id to check for: ");
                     String vidID3 = sc.nextLine().trim();
                     //System.out.println(checkInStore(vidID3));
-                    if (checkInStore(vidID3)) {
+                    if (typeOfList.equals("SLL"))
+                        if (checkInStoreSLL(vidID3)) {
+                            System.out.println("In store");
+                        } else {
+                            System.out.println("Not in store");
+                        }
+                    else if (checkInStoreDLL(vidID3))
                         System.out.println("In store");
-                    } else {
+                    else
                         System.out.println("Not in store");
-                    }
                 }
                 case 6 -> {
                     System.out.print("Enter ID of customer: ");
@@ -108,7 +116,8 @@ public class VideoStore {
                 case 12 -> {
                     System.out.print("Enter ID of customer: ");
                     String customerID2 = sc.nextLine().trim();
-                    getCustomer(customerID2).printVideos();
+                    if (getCustomer(customerID2) != null)
+                        getCustomer(customerID2).printVideos();
                 }
                 case 13 -> System.exit(0);
             }
@@ -141,8 +150,8 @@ public class VideoStore {
             videoSLL.add(new SLNode(new Video(movieName, id), null));
             storeVideosSLL.add((new SLNode(new Video(movieName, id), null)));
         } else if (typeOfList.equals("DLL")) {
-            videoDList.addLast(new DNode(new Video(movieName, id), null, null));
-
+            videoDLL.addLast(new DNode(new Video(movieName, id), null, null));
+            storeVideoDLL.addLast(new DNode(new Video(movieName, id), null, null));
         } else {
             System.out.println("invalid");
         }
@@ -151,37 +160,68 @@ public class VideoStore {
 
 
     static void deleteVideo(String id) {
-        storeVideosSLL.deleteVideo(id);
-        videoSLL.deleteVideo(id);
+        switch (typeOfList) {
+            case "SLL" -> {
+                storeVideosSLL.deleteVideo(id);
+                videoSLL.deleteVideo(id);
+                break;
+            }
+            case "DLL" -> {
+                storeVideoDLL.deleteDLL(id, v);
+                videoDLL.deleteDLL(id, v);
+                break;
+            }
+        }
     }
 
 
     static void deleteCustomer(String id) {
-        customerSLL.deleteCustomer(id);
+        if (Objects.equals(typeOfList, "SLL")) {
+            customerSLL.deleteCustomer(id);
+        } else if (Objects.equals(typeOfList, "DLL")) {
+            customerDLL.deleteDLL(id, c);
+        } else {
+            System.out.println("Invalid");
+        }
     }
 
     static void printAllVideos() {
-        videoSLL.print();
+        if (typeOfList.equals("SLL")) {
+            videoSLL.print();
+        } else if (typeOfList.equals("DLL")) {
+            videoDLL.print();
+        }
     }
 
     static void printAllCustomers() {
-        customerSLL.print();
+        if (typeOfList.equals("SLL")) {
+            customerSLL.print();
+        } else if (typeOfList.equals("DLL")) {
+            customerDLL.print();
+        }
     }
 
     private static Customer getCustomer(String id) {
-        return customerSLL.getCustomer(id);
+        if (typeOfList.equals("SLL")) {
+            return customerSLL.getCustomer(id);
+        } else {
+            return customerDLL.getCustomer(id);
+        }
     }
 
     private static Video getVideo(String id) {
-        return videoSLL.getVideo(id);
+        if (typeOfList.equals("SLL")) {
+            return videoSLL.getVideo(id);
+        } else {
+            return videoDLL.getVideo(id);
+        }
     }
 
     static void addCustomer(String name, String id) {
         if (typeOfList.equals("SLL")) {
             customerSLL.add(new SLNode(new Customer(name, id), null));
         } else if (typeOfList.equals("DLL")) {
-            customerDList.addLast(new DNode(new Customer(name, id), null, null));
-
+            customerDLL.addLast(new DNode(new Customer(name, id), null, null));
         } else {
             System.out.println("invalid");
         }
@@ -208,24 +248,47 @@ public class VideoStore {
 
 
     static void checkOutVideo(String customerID, String videoID) {
+        switch (typeOfList) {
+            case "SLL":
+                if (getCustomer(customerID).getRentVideoSLL() == null) {
+                    if (storeVideosSLL.deleteVideo(videoID)) {
+                        getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
+                        getVideo(videoID).setAvailable(false);
+                        //getVideo(videoID).setAvailable(false);
 
-        if (getCustomer(customerID).getRentVideoSLL() == null) {
-            if (storeVideosSLL.deleteVideo(videoID)) {
-                getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
-                getVideo(videoID).setAvailable(false);
-                //getVideo(videoID).setAvailable(false);
+                    }
+                    //storeVideosSLL.deleteVideo(videoID);
+                    //getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
+                } else {
+                    if (storeVideosSLL.deleteVideo(videoID)) {
+                        //storeVideosSLL.deleteVideo(videoID);
+                        getCustomer(customerID).addRentSLL(getVideo(videoID));
+                        getVideo(videoID).setAvailable(false);
+                        //getVideo(videoID).setAvailable(false);
 
-            }
-            //storeVideosSLL.deleteVideo(videoID);
-            //getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
-        } else {
-            if (storeVideosSLL.deleteVideo(videoID)) {
-                //storeVideosSLL.deleteVideo(videoID);
-                getCustomer(customerID).addRentSLL(getVideo(videoID));
-                getVideo(videoID).setAvailable(false);
-                //getVideo(videoID).setAvailable(false);
+                    }
+                }
+                break;
+            case "DLL":
+                if (getCustomer(customerID).getRentVideoDLL() == null) {
+                    if (storeVideoDLL.deleteDLL(videoID, v)) {
+                        getCustomer(customerID).createAndAddRentDLL(getVideo(videoID));
+                        getVideo(videoID).setAvailable(false);
+                        //getVideo(videoID).setAvailable(false);
 
-            }
+                    }
+                    //storeVideosSLL.deleteVideo(videoID);
+                    //getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
+                } else {
+                    if (storeVideoDLL.deleteDLL(videoID, v)) {
+                        //storeVideosSLL.deleteVideo(videoID);
+                        getCustomer(customerID).addRentDLL(getVideo(videoID));
+                        getVideo(videoID).setAvailable(false);
+                        //getVideo(videoID).setAvailable(false);
+
+                    }
+                }
+                break;
         }
 
 
@@ -233,12 +296,23 @@ public class VideoStore {
 
 
     static void checkInVideo(String videoID) {
-        for (int i = 0; i < customerIdCounter; i++) {
-            if (getCustomer(String.valueOf(i)).getRentVideoSLL() != null && !getVideo(videoID).isAvailable()) {
-                getCustomer(String.valueOf(i)).removeRentSLL(getVideo(videoID));
-                storeVideosSLL.add((new SLNode(new Video(getVideo(videoID).getTitle(), videoID), null)));
-                getVideo(videoID).setAvailable(true);
+        if (typeOfList.equals("SLL")) {
+            for (int i = 0; i < customerIdCounter; i++) {
+                if (getCustomer(String.valueOf(i)).getRentVideoSLL() != null && !getVideo(videoID).isAvailable()) {
+                    getCustomer(String.valueOf(i)).removeRentSLL(getVideo(videoID));
+                    storeVideosSLL.add((new SLNode(new Video(getVideo(videoID).getTitle(), videoID), null)));
+                    getVideo(videoID).setAvailable(true);
+                }
             }
+        } else if (typeOfList.equals("DLL")) {
+            for (int i = 0; i < customerIdCounter; i++) {
+                if (getCustomer(String.valueOf(i)).getRentVideoDLL() != null && !getVideo(videoID).isAvailable()) {
+                    getCustomer(String.valueOf(i)).removeRentDLL(getVideo(videoID));
+                    storeVideoDLL.addLast((new DNode(new Video(getVideo(videoID).getTitle(), videoID), null, null)));
+                    getVideo(videoID).setAvailable(true);
+                }
+            }
+
         }
     }
 
@@ -251,11 +325,15 @@ public class VideoStore {
     }
 
     static void printInStore2() {
-        storeVideosSLL.print();
+        if (typeOfList.equals("SLL")) {
+            storeVideosSLL.print();
+        } else if (typeOfList.equals("DLL")) {
+            storeVideoDLL.print();
+        }
     }
 
 
-    static boolean checkInStore(String id) {
+    static boolean checkInStoreSLL(String id) {
         SLNode current = storeVideosSLL.getHead();
         Video v;
         if (current == null) {
@@ -281,7 +359,30 @@ public class VideoStore {
 
     }
 
+    static boolean checkInStoreDLL(String id) {
+        DNode current = storeVideoDLL.getHeader();
+        Video v;
+        if (current == null) {
+            return false;
+        } else {
+            v = (Video) current.getElement();
+        }
+        while (true) {
+            if (Objects.equals(v.getId(), id)) {
+                return true;
+            } else {
+                //v = (Video) current.getElement();
+                current = current.getNext();
+                if (current != null) {
+                    v = (Video) current.getElement();
+                } else {
+                    return false;
+                }
+                //v = current.getNext().getElement();
+            }
+            //v = (Video) current.getElement();
+        }
+
+    }
 
 }
-
-
