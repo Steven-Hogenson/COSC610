@@ -5,7 +5,6 @@ package VideoStoreProject;
  */
 public class SLL {
     private SLNode head;
-    private int size = 0;
 
     public SLL() {
         head = null;
@@ -30,7 +29,6 @@ public class SLL {
         while (current != null) {
             System.out.println(current.getElement());
             current = current.getNext();
-            //size++;
         }
         System.out.println();
     }
@@ -77,7 +75,6 @@ public class SLL {
         Video v = (Video) current.getElement();
         if (v != null && v.getId().equals(id)) {
             setHead(current.getNext());
-            System.out.println("SUCCESS");
             return true;
         }
         while (v != null && !v.getId().equals(id)) {
@@ -95,7 +92,7 @@ public class SLL {
         if (temp != null) {
             temp.setNext(current.getNext());
         }
-        System.out.println("SUCCESS");
+
         return true;
 
     }

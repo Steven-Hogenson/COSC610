@@ -62,7 +62,12 @@ public class VideoStore {
                 case 2 -> {
                     System.out.print("Enter ID of video to delete: ");
                     String videoID = sc.nextLine().trim();
-                    deleteVideo(videoID);
+                    if (getVideo(videoID).isAvailable()) {
+                        deleteVideo(videoID);
+                    } else {
+                        System.out.println("Cannot delete checked out video");
+                    }
+
                 }
                 case 3 -> {
                     System.out.print("Enter name of customer: ");
@@ -77,7 +82,12 @@ public class VideoStore {
                 case 5 -> {
                     System.out.print("Enter video id to check for: ");
                     String vidID3 = sc.nextLine().trim();
-                    System.out.println(checkInStore(vidID3));
+                    //System.out.println(checkInStore(vidID3));
+                    if (checkInStore(vidID3)) {
+                        System.out.println("In store");
+                    } else {
+                        System.out.println("Not in store");
+                    }
                 }
                 case 6 -> {
                     System.out.print("Enter ID of customer: ");
@@ -87,19 +97,14 @@ public class VideoStore {
                     checkOutVideo(custID, vidID);
                 }
                 case 7 -> {
-                    System.out.print("Enter ID of customer: ");
-                    String custoID = sc.nextLine().trim();
                     System.out.print("Enter ID of video: ");
                     String videID = sc.nextLine().trim();
-                    checkInVideo(custoID, videID);
+                    checkInVideo(videID);
                 }
                 case 8 -> printAllCustomers();
                 case 9 -> printAllVideos();
                 case 10 -> printInStore2();
-                case 11 -> {
-                    System.out.println("Checked out videos: ");
-                    printRented();
-                }
+                case 11 -> printRented();
                 case 12 -> {
                     System.out.print("Enter ID of customer: ");
                     String customerID2 = sc.nextLine().trim();
@@ -146,9 +151,10 @@ public class VideoStore {
 
 
     static void deleteVideo(String id) {
+        storeVideosSLL.deleteVideo(id);
         videoSLL.deleteVideo(id);
-
     }
+
 
     static void deleteCustomer(String id) {
         customerSLL.deleteCustomer(id);
@@ -206,6 +212,7 @@ public class VideoStore {
         if (getCustomer(customerID).getRentVideoSLL() == null) {
             if (storeVideosSLL.deleteVideo(videoID)) {
                 getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
+                getVideo(videoID).setAvailable(false);
                 //getVideo(videoID).setAvailable(false);
 
             }
@@ -215,6 +222,7 @@ public class VideoStore {
             if (storeVideosSLL.deleteVideo(videoID)) {
                 //storeVideosSLL.deleteVideo(videoID);
                 getCustomer(customerID).addRentSLL(getVideo(videoID));
+                getVideo(videoID).setAvailable(false);
                 //getVideo(videoID).setAvailable(false);
 
             }
@@ -223,12 +231,15 @@ public class VideoStore {
 
     }
 
-    static void checkInVideo(String customerID, String videoID) {
-        getCustomer(customerID).removeRentSLL(getVideo(videoID));
-        storeVideosSLL.add((new SLNode(new Video(getVideo(videoID).getTitle(), videoID), null)));
-        //getVideo(videoID).setAvailable(true);
-        //videoSLL.add(new SLNode(new Video(getVideo(videoID).getTitle(), getVideo(videoID).getId()), null));
 
+    static void checkInVideo(String videoID) {
+        for (int i = 0; i < customerIdCounter; i++) {
+            if (getCustomer(String.valueOf(i)).getRentVideoSLL() != null && !getVideo(videoID).isAvailable()) {
+                getCustomer(String.valueOf(i)).removeRentSLL(getVideo(videoID));
+                storeVideosSLL.add((new SLNode(new Video(getVideo(videoID).getTitle(), videoID), null)));
+                getVideo(videoID).setAvailable(true);
+            }
+        }
     }
 
     static void printRented() {
@@ -269,6 +280,7 @@ public class VideoStore {
         }
 
     }
+
 
 }
 
