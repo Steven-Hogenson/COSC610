@@ -50,7 +50,7 @@ public class VideoStore {
          */
         System.out.print("Type of list... SLL or DLL: ");
         //typeOfList = sc.nextLine();
-        typeOfList = "DLL";
+        typeOfList = "SLL";
         int scanInput;
         while (true) {
             printOptions();
@@ -65,10 +65,10 @@ public class VideoStore {
                 case 2 -> {
                     System.out.print("Enter ID of video to delete: ");
                     String videoID = sc.nextLine().trim();
-                    if (getVideo(videoID).isAvailable()) {
+                    if (getVideo((videoID)) != null && getVideo(videoID).isAvailable()) {
                         deleteVideo(videoID);
                     } else {
-                        System.out.println("Cannot delete checked out video");
+                        System.out.println("Could not delete video");
                     }
 
                 }
@@ -252,18 +252,12 @@ public class VideoStore {
                     if (storeVideosSLL.deleteVideo(videoID)) {
                         getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
-                        //getVideo(videoID).setAvailable(false);
-
                     }
-                    //storeVideosSLL.deleteVideo(videoID);
-                    //getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
+
                 } else {
                     if (storeVideosSLL.deleteVideo(videoID)) {
-                        //storeVideosSLL.deleteVideo(videoID);
                         getCustomer(customerID).addRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
-                        //getVideo(videoID).setAvailable(false);
-
                     }
                 }
                 break;
@@ -275,21 +269,14 @@ public class VideoStore {
                         //getVideo(videoID).setAvailable(false);
 
                     }
-                    //storeVideosSLL.deleteVideo(videoID);
-                    //getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
                 } else {
                     if (storeVideoDLL.deleteDLL(videoID, v)) {
-                        //storeVideosSLL.deleteVideo(videoID);
                         getCustomer(customerID).addRentDLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
-                        //getVideo(videoID).setAvailable(false);
-
                     }
                 }
                 break;
         }
-
-
     }
 
 
@@ -343,16 +330,13 @@ public class VideoStore {
             if (Objects.equals(v.getId(), id)) {
                 return true;
             } else {
-                //v = (Video) current.getElement();
                 current = current.getNext();
                 if (current != null) {
                     v = (Video) current.getElement();
                 } else {
                     return false;
                 }
-                //v = current.getNext().getElement();
             }
-            //v = (Video) current.getElement();
         }
 
     }
@@ -376,9 +360,7 @@ public class VideoStore {
                 } else {
                     return false;
                 }
-                //v = current.getNext().getElement();
             }
-            //v = (Video) current.getElement();
         }
 
     }

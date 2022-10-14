@@ -98,7 +98,6 @@ public class SLL {
     }
 
 
-
     public Video getVideo(String id) {
         if (getHead() == null) {
             return null;
@@ -106,16 +105,15 @@ public class SLL {
 
         SLNode current = head;
         Video v = (Video) current.getElement();
-        while (v != null) {
+        while (current != null) {
             if (v.getId().equals(id)) {
                 return v;
             }
             //
-
             current = current.getNext();
-            v = (Video) current.getElement();
-
-
+            if (current != null) {
+                v = (Video) current.getElement();
+            }
         }
         return null;
     }
@@ -127,36 +125,98 @@ public class SLL {
         }
 
         SLNode current = head;
-        Customer c = (Customer) current.getElement();
-        while (c != null) {
-            if (c.getId().equals(id)) {
-                return c;
+        Customer v = (Customer) current.getElement();
+        while (current != null) {
+            if (v.getId().equals(id)) {
+                return v;
             }
+            //
             current = current.getNext();
-            c = (Customer) current.getElement();
+            if (current != null) {
+                v = (Customer) current.getElement();
+            }
 
         }
         return null;
+
     }
 
     public void deleteCustomer(String id) {
         SLNode current = getHead();
         SLNode temp = null;
-        Customer c = (Customer) current.getElement();
-        if (c != null && c.getId().equals(id)) {
+        Customer v = (Customer) current.getElement();
+        if (v != null && v.getId().equals(id)) {
             setHead(current.getNext());
             return;
         }
-        while (c != null && !c.getId().equals(id)) {
+        while (v != null && !v.getId().equals(id)) {
             temp = current;
             current = current.getNext();
-            c = (Customer) current.getElement();
+            //remove if statement if issue
+            if (current != null) {
+                v = (Customer) current.getElement();
+            } else {
+                System.out.println("Unable to perform task.");
+                return;
+            }
         }
 
         if (temp != null) {
             temp.setNext(current.getNext());
         }
+
     }
+
+    public boolean delete(String id, Object o) {
+        SLNode current = getHead();
+        SLNode temp = null;
+        if (o instanceof Customer) {
+            Customer c = (Customer) current.getElement();
+            if (c != null && c.getId().equals(id)) {
+                setHead(current.getNext());
+                return true;
+            }
+            while (c != null && !c.getId().equals(id)) {
+                temp = current;
+                current = current.getNext();
+                if (current != null) {
+                    c = (Customer) current.getElement();
+                } else {
+                    System.out.println("Unable to perform task.");
+                    return false;
+                }
+            }
+
+            if (temp != null) {
+                temp.setNext(current.getNext());
+            }
+        } else if (o instanceof Video) {
+            Video v = (Video) current.getElement();
+            if (v != null && v.getId().equals(id)) {
+                setHead(current.getNext());
+                return true;
+            }
+            while (v != null && !v.getId().equals(id)) {
+                temp = current;
+                current = current.getNext();
+                if (current != null) {
+                    v = (Video) current.getElement();
+                } else {
+                    System.out.println("Unable to perform task.");
+                    return false;
+                }
+            }
+
+            if (temp != null) {
+                temp.setNext(current.getNext());
+            }
+
+            return true;
+
+        }
+        return false;
+    }
+
 
     /**
      * Reverses the order of elements in an SLL

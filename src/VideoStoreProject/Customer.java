@@ -39,7 +39,6 @@ public class Customer {
     }
 
     public void addRentSLL(Video v) {
-        //rentVideoSLL = new SLL();
         rentVideoSLL.add(new SLNode(new Video(v.getTitle(), v.getId()), null));
     }
 
@@ -53,7 +52,6 @@ public class Customer {
     }
 
     public void addRentDLL(Video v) {
-        rentVideoDLL = new DLL();
         rentVideoDLL.addLast(new DNode(new Video(v.getTitle(), v.getId()), null, null));
     }
 
@@ -66,16 +64,7 @@ public class Customer {
         rentVideoDLL.deleteDLL(v.getId(), v);
     }
 
-    /*
-        @Override
-        public String toString() {
-            return "Customer{" +
-                    "name='" + name + '\'' +
-                    ", id='" + id + '\'' +
-                    '}';
-        }
 
-     */
     @Override
     public String toString() {
         return "[" + id + "] " + name;

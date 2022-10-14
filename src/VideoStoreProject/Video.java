@@ -32,16 +32,6 @@ public class Video {
         return isAvailable;
     }
 
-    /*
-        @Override
-        public String toString() {
-            return "Video{" +
-                    "title='" + title + '\'' +
-                    ", id='" + id + '\'' +
-                    '}';
-        }
-
-     */
 
 
     @Override
