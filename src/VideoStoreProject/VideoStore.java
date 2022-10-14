@@ -21,7 +21,7 @@ public class VideoStore {
     private static final Customer c = new Customer("", "");
 
     public static void main(String[] args) {
-//TODO DLL deletion when id is not present
+//TODO DLL deletion when customer (and maybe video) id is not present
         Scanner sc = new Scanner(System.in);
         /*
         if()
