@@ -92,7 +92,6 @@ public class DLL {
     }
 
 
-
     public boolean deleteDLL(String id, Object o) {
         DNode current = getHeader();
         DNode temp = null;
@@ -179,17 +178,15 @@ public class DLL {
 
         DNode current = getHeader();
         Video v = (Video) current.getElement();
-        while (v != null) {
+        while (current != null) {
             if (v.getId().equals(id)) {
                 return v;
             }
-
-            if(current.getNext() != null) {
-                current = current.getNext();
+            //
+            current = current.getNext();
+            if (current != null) {
                 v = (Video) current.getElement();
             }
-
-
         }
         return null;
     }
@@ -206,7 +203,7 @@ public class DLL {
             if (c.getId().equals(id)) {
                 return c;
             }
-            if(current.getNext()!=null) {
+            if (current.getNext() != null) {
                 current = current.getNext();
                 c = (Customer) current.getElement();
             }

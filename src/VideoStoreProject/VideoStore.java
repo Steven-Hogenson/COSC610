@@ -21,7 +21,7 @@ public class VideoStore {
     private static final Customer c = new Customer("", "");
 
     public static void main(String[] args) {
-
+//TODO DLL deletion when id is not present
         Scanner sc = new Scanner(System.in);
         /*
         if()
@@ -81,7 +81,9 @@ public class VideoStore {
                 case 4 -> {
                     System.out.print("Enter customer id to delete: ");
                     String customerID = sc.nextLine().trim();
-                    deleteCustomer(customerID);
+                    if (getCustomer(customerID) != null) {
+                        deleteCustomer(customerID);
+                    }
                 }
                 case 5 -> {
                     System.out.print("Enter video id to check for: ");
@@ -163,8 +165,8 @@ public class VideoStore {
     static void deleteVideo(String id) {
         switch (typeOfList) {
             case "SLL" -> {
-                storeVideosSLL.deleteVideo(id);
-                videoSLL.deleteVideo(id);
+                storeVideosSLL.delete(id, v);
+                videoSLL.delete(id, v);
             }
             case "DLL" -> {
                 storeVideoDLL.deleteDLL(id, v);
@@ -176,7 +178,7 @@ public class VideoStore {
 
     static void deleteCustomer(String id) {
         if (Objects.equals(typeOfList, "SLL")) {
-            customerSLL.deleteCustomer(id);
+            customerSLL.delete(id, c);
         } else if (Objects.equals(typeOfList, "DLL")) {
             customerDLL.deleteDLL(id, c);
         } else {
@@ -250,13 +252,13 @@ public class VideoStore {
         switch (typeOfList) {
             case "SLL":
                 if (getCustomer(customerID).getRentVideoSLL() == null) {
-                    if (storeVideosSLL.deleteVideo(videoID)) {
+                    if (storeVideosSLL.delete(videoID, v)) {
                         getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
 
                 } else {
-                    if (storeVideosSLL.deleteVideo(videoID)) {
+                    if (storeVideosSLL.delete(videoID, v)) {
                         getCustomer(customerID).addRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
