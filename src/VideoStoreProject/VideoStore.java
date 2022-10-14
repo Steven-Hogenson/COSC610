@@ -24,6 +24,7 @@ public class VideoStore {
 
         Scanner sc = new Scanner(System.in);
         /*
+        if()
         if (args.length == 1) {
             typeOfList = args[0];
         } else if (args.length == 4) {
