@@ -12,7 +12,7 @@ public class SLNode {
         this.next = next;
     }
 
-    //Getters
+
     public Object getElement() {
         return element;
     }
@@ -21,7 +21,7 @@ public class SLNode {
         return next;
     }
 
-    //Setters
+
     public void setElement(Object element) {
         this.element = element;
     }
