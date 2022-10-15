@@ -121,9 +121,9 @@ public class VideoStore {
             }
         } else {
             for (int i = 0; i < videoCount; i++)
-                addVideo("Video " + i, String.valueOf(i));
+                addVideo("Video Name: " + i, String.valueOf(i));
             for (int i = 0; i < customerCount; i++)
-                addCustomer("Customer " + i, String.valueOf(i));
+                addCustomer("Customer Name: " + i, String.valueOf(i));
             Stack<Integer> operationStack = new Stack<>();
             for (int i = 0; i < transactionCount; i++) {
                 int randomInt = ThreadLocalRandom.current().nextInt(5, 8);
@@ -131,7 +131,7 @@ public class VideoStore {
             }
             //start time
             long startTime = System.nanoTime();
-            for (int i = 0; i < transactionCount; i++) {
+            while (operationStack.size() > 0) {
                 int operation = operationStack.pop();
 
                 if (operation == 5) {
