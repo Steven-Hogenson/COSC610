@@ -130,6 +130,9 @@ public class SLL {
         SLNode current = getHead();
         SLNode temp = null;
         if (o instanceof Customer) {
+            if (current == null) {
+                return false;
+            }
             Customer c = (Customer) current.getElement();
             if (c != null && c.getId().equals(id)) {
                 setHead(current.getNext());
