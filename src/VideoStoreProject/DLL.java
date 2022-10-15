@@ -34,7 +34,7 @@ public class DLL {
     public void print() {
         DNode current = getHeader();
         while (current != null) {
-            System.out.print(current.getElement() + " ");
+            System.out.println(current.getElement());
             current = current.getNext();
         }
         System.out.println();
@@ -115,7 +115,7 @@ public class DLL {
                     v = (Video) current.getElement();
                     current.setPrevious(temp);
                 } else {
-                    System.out.println("Unable to perform task.");
+                    //System.out.println("Unable to perform task.");
                     return false;
                 }
             }
@@ -136,7 +136,7 @@ public class DLL {
                     v = (Customer) current.getElement();
                     current.setPrevious(temp);
                 } else {
-                    System.out.println("Unable to perform task.");
+                    //System.out.println("Unable to perform task.");
                     return false;
                 }
             }
@@ -220,7 +220,7 @@ public class DLL {
      * @param id video's id to check for
      * @return boolean if the video is not currently being rented
      */
-    public static boolean checkInStoreDLL(String id, DNode d) {
+    public boolean checkInStoreDLL(String id, DNode d) {
         DNode current = d;
         Video v;
         if (current == null) {

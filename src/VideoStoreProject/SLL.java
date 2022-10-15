@@ -141,7 +141,7 @@ public class SLL {
                 if (current != null) {
                     c = (Customer) current.getElement();
                 } else {
-                    System.out.println("Unable to perform task.");
+                    //System.out.println("Unable to perform task.");
                     return false;
                 }
             }
@@ -160,7 +160,7 @@ public class SLL {
                 if (current != null) {
                     v = (Video) current.getElement();
                 } else {
-                    System.out.println("Unable to perform task.");
+                    //System.out.println("Unable to perform task.");
                     return false;
                 }
             }
@@ -193,13 +193,14 @@ public class SLL {
         }
         setHead(previous);
     }
+
     /**
      * Checks for a SLNode matching the video's id that is in store
      *
      * @param id video's id to check for
      * @return boolean if the video is not currently being rented
      */
-    public static boolean checkInStoreSLL(String id, SLNode s) {
+    public boolean checkInStoreSLL(String id, SLNode s) {
         SLNode current = s;
         Video v;
         if (current == null) {
