@@ -149,6 +149,9 @@ public class SLL {
                 temp.setNext(current.getNext());
             }
         } else if (o instanceof Video) {
+            if (current == null) {
+                return false;
+            }
             Video v = (Video) current.getElement();
             if (v != null && v.getId().equals(id)) {
                 setHead(current.getNext());

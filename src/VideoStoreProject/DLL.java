@@ -124,6 +124,10 @@ public class DLL {
             }
             return true;
         } else if (o instanceof Customer) {
+
+            if (current == null) {
+                return false;
+            }
             Customer v = (Customer) current.getElement();
             if (v != null && v.getId().equals(id)) {
                 setHeader(current.getNext());
