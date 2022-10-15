@@ -54,12 +54,7 @@ public class VideoStore {
             System.exit(0);
         }
 
-        System.out.println("Videos: " + videoCount + "; Customers: " + customerCount + "; Transactions: " + transactionCount);
 
-
-        //System.out.print("Type of list... SLL or DLL: \n");
-        // typeOfList = sc.nextLine();
-        //typeOfList = "DLL";
         if (args.length == 1) {
             int scanInput;
             while (true) {
