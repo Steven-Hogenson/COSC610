@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
-
 /**
  * @author Steven Hogenson on 10/4/2022
  */
@@ -27,7 +26,6 @@ public class VideoStore {
         int videoCount = 0;
         int customerCount = 0;
         int transactionCount = 0;
-
 
         if (args.length == 1) {
             typeOfList = args[0];
@@ -54,7 +52,6 @@ public class VideoStore {
             System.exit(0);
         }
 
-
         if (args.length == 1) {
             int scanInput;
             while (true) {
@@ -70,12 +67,10 @@ public class VideoStore {
                     case 2 -> {
                         System.out.print("Enter ID of video to delete: ");
                         String videoID = sc.nextLine().trim();
-                        if (getVideo((videoID)) != null && getVideo(videoID).isAvailable()) {
+                        if (getVideo((videoID)) != null && getVideo(videoID).isAvailable())
                             deleteVideo(videoID);
-                        } else {
+                        else
                             System.out.println("Could not delete video");
-                        }
-
                     }
                     case 3 -> {
                         System.out.print("Enter name of customer: ");
@@ -85,28 +80,27 @@ public class VideoStore {
                     case 4 -> {
                         System.out.print("Enter customer id to delete: ");
                         String customerID = sc.nextLine().trim();
-                        if (getCustomer(customerID) != null) {
+                        if (getCustomer(customerID) != null)
                             deleteCustomer(customerID);
-                        } else {
+                        else
                             System.out.println("Could not delete customer");
-                        }
                     }
                     case 5 -> {
                         System.out.print("Enter video id to check for: ");
-                        String vidID3 = sc.nextLine().trim();
-                        System.out.println(checkInStore(vidID3));
+                        String videoID = sc.nextLine().trim();
+                        System.out.println(checkInStore(videoID));
                     }
                     case 6 -> {
                         System.out.print("Enter ID of customer: ");
-                        String customer2ID = sc.nextLine().trim();
+                        String customerID = sc.nextLine().trim();
                         System.out.print("Enter ID of video: ");
-                        String vidID = sc.nextLine().trim();
-                        checkOutVideo(customer2ID, vidID);
+                        String videoID = sc.nextLine().trim();
+                        checkOutVideo(customerID, videoID);
                     }
                     case 7 -> {
                         System.out.print("Enter ID of video: ");
-                        String videID = sc.nextLine().trim();
-                        checkInVideo(videID);
+                        String videoID = sc.nextLine().trim();
+                        checkInVideo(videoID);
                     }
                     case 8 -> printAllCustomers();
                     case 9 -> printAllVideos();
@@ -114,9 +108,9 @@ public class VideoStore {
                     case 11 -> printRented();
                     case 12 -> {
                         System.out.print("Enter ID of customer: ");
-                        String customerID2 = sc.nextLine().trim();
-                        if (getCustomer(customerID2) != null)
-                            getCustomer(customerID2).printVideos();
+                        String customerID = sc.nextLine().trim();
+                        if (getCustomer(customerID) != null)
+                            getCustomer(customerID).printVideos();
                     }
                     case 13 -> {
                         System.out.println("Goodbye.");
@@ -126,41 +120,37 @@ public class VideoStore {
                 }
             }
         } else {
-
             for (int i = 0; i < videoCount; i++)
                 addVideo("Video " + i, String.valueOf(i));
             for (int i = 0; i < customerCount; i++)
                 addCustomer("Customer " + i, String.valueOf(i));
-            Stack<Integer> transactionStack = new Stack<>();
+            Stack<Integer> operationStack = new Stack<>();
             for (int i = 0; i < transactionCount; i++) {
                 int randomInt = ThreadLocalRandom.current().nextInt(5, 8);
-                transactionStack.push(randomInt);
+                operationStack.push(randomInt);
             }
             //start time
             long startTime = System.nanoTime();
             for (int i = 0; i < transactionCount; i++) {
-                int temp = transactionStack.pop();
+                int operation = operationStack.pop();
 
-                if (temp == 5) {
-                    int getRandVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
-                    checkInStore(String.valueOf(getRandVideo));
+                if (operation == 5) {
+                    int searchRandomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
+                    checkInStore(String.valueOf(searchRandomVideo));
                 }
-
-                if (temp == 6) {
-                    int getCustomerRandom = ThreadLocalRandom.current().nextInt(0, customerCount);
-                    int getVideoRandom = ThreadLocalRandom.current().nextInt(0, videoCount);
-                    checkOutVideo(String.valueOf(getCustomerRandom), String.valueOf(getVideoRandom));
+                if (operation == 6) {
+                    int randomCustomer = ThreadLocalRandom.current().nextInt(0, customerCount);
+                    int randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
+                    checkOutVideo(String.valueOf(randomCustomer), String.valueOf(randomVideo));
                 }
-
-                if (temp == 7) {
-                    int getVideoRandom = ThreadLocalRandom.current().nextInt(0, videoCount);
-                    checkInVideo(String.valueOf(getVideoRandom));
+                if (operation == 7) {
+                    int randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
+                    checkInVideo(String.valueOf(randomVideo));
                 }
             }
             //end time
             long endTime = System.nanoTime();
             System.out.println("Total Service Time in ms: " + (endTime - startTime) / 1000000.0);
-
         }
     }
 
