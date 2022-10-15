@@ -103,6 +103,9 @@ public class DLL {
         DNode current = getHeader();
         DNode temp = null;
         if (o instanceof Video) {
+            if (current == null) {
+                return false;
+            }
             Video v = (Video) current.getElement();
             if (v != null && v.getId().equals(id)) {
                 setHeader(current.getNext());
