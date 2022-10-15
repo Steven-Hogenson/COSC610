@@ -133,18 +133,19 @@ public class VideoStore {
                 operationStack.push(randomInt);
             }
             //start time
+            int operation, randomVideo, randomCustomer;
             long startTime = System.nanoTime();
             while (operationStack.size() > 0) {
-                int operation = operationStack.pop();
+                operation = operationStack.pop();
                 if (operation == 5) {
-                    int searchRandomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
-                    checkInStore(String.valueOf(searchRandomVideo));
+                    randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
+                    checkInStore(String.valueOf(randomVideo));
                 } else if (operation == 6) {
-                    int randomCustomer = ThreadLocalRandom.current().nextInt(0, customerCount);
-                    int randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
+                    randomCustomer = ThreadLocalRandom.current().nextInt(0, customerCount);
+                    randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
                     checkOutVideo(String.valueOf(randomCustomer), String.valueOf(randomVideo));
                 } else {
-                    int randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
+                    randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
                     checkInVideo(String.valueOf(randomVideo));
                 }
             }
