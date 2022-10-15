@@ -48,7 +48,7 @@ public class Customer {
     }
 
     public void removeRentSLL(Video v) {
-        rentVideoSLL.deleteVideo(v.getId());
+        rentVideoSLL.deleteSLL(v.getId(), v);
     }
 
     public void addRentDLL(Video v) {

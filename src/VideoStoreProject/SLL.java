@@ -69,35 +69,12 @@ public class SLL {
         }
     }
 
-    public boolean deleteVideo(String id) {
-        SLNode current = getHead();
-        SLNode temp = null;
-        Video v = (Video) current.getElement();
-        if (v != null && v.getId().equals(id)) {
-            setHead(current.getNext());
-            return true;
-        }
-        while (v != null && !v.getId().equals(id)) {
-            temp = current;
-            current = current.getNext();
-            //remove if statement if issue
-            if (current != null) {
-                v = (Video) current.getElement();
-            } else {
-                System.out.println("Unable to perform task.");
-                return false;
-            }
-        }
-
-        if (temp != null) {
-            temp.setNext(current.getNext());
-        }
-
-        return true;
-
-    }
-
-
+    /**
+     * Checks an SLL for a Video matching param id, and returns that Video
+     *
+     * @param id the video's id number
+     * @return a video whose ID number matches param id in an SLL
+     */
     public Video getVideo(String id) {
         if (getHead() == null) {
             return null;
@@ -118,7 +95,12 @@ public class SLL {
         return null;
     }
 
-
+    /**
+     * Checks an SLL for a Customer matching param id, and returns that Customer
+     *
+     * @param id the customer's id number
+     * @return a customer whose ID number matches param id in an SLL
+     */
     public Customer getCustomer(String id) {
         if (getHead() == null) {
             return null;
@@ -141,33 +123,14 @@ public class SLL {
 
     }
 
-    public void deleteCustomer(String id) {
-        SLNode current = getHead();
-        SLNode temp = null;
-        Customer v = (Customer) current.getElement();
-        if (v != null && v.getId().equals(id)) {
-            setHead(current.getNext());
-            return;
-        }
-        while (v != null && !v.getId().equals(id)) {
-            temp = current;
-            current = current.getNext();
-            //remove if statement if issue
-            if (current != null) {
-                v = (Customer) current.getElement();
-            } else {
-                System.out.println("Unable to perform task.");
-                return;
-            }
-        }
-
-        if (temp != null) {
-            temp.setNext(current.getNext());
-        }
-
-    }
-
-    public boolean delete(String id, Object o) {
+    /**
+     * Will delete an object from an SLL based on if it is a Video or Customer object
+     *
+     * @param id the id of either customer or video
+     * @param o  the object (customer or video)
+     * @return boolean if the node was deleted
+     */
+    public boolean deleteSLL(String id, Object o) {
         SLNode current = getHead();
         SLNode temp = null;
         if (o instanceof Customer) {

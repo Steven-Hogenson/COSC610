@@ -13,7 +13,7 @@ public class VideoStore {
     static SLL storeVideosSLL = new SLL();
     static SLL customerSLL = new SLL();
     static DLL videoDLL = new DLL();
-    static DLL storeVideoDLL = new DLL();
+    static DLL storeVideosDLL = new DLL();
     static DLL customerDLL = new DLL();
     private static long videoIdCounter = 0;
     private static long customerIdCounter = 0;
@@ -21,37 +21,36 @@ public class VideoStore {
     private static final Customer c = new Customer("", "");
 
     public static void main(String[] args) {
-//TODO DLL deletion when customer (and maybe video) id is not present
         Scanner sc = new Scanner(System.in);
         /*
-        if()
-        if (args.length == 1) {
-            typeOfList = args[0];
-        } else if (args.length == 4) {
-            typeOfList = args[0];
-            videoCount = Integer.parseInt(args[1]);
-            customerCount = Integer.parseInt(args[2]);
-            requestCount = Integer.parseInt(args[3]);
-        } else {
-            System.out.println("INVALID ARGUMENTS");
-            System.exit(0);
-        }
-
-        if (typeOfList.equals("SLL")) {
-            videoSLL = new SLL();
-            customerSLL = new SLL();
-        } else if (typeOfList.equals("DLL")) {
-            videoDList = new DList();
-            customerDList = new DList();
-        } else {
-            System.out.println("INVALID ARGUMENT");
-            System.exit(0);
-        }
-
+         * if()
+         * if (args.length == 1) {
+         * typeOfList = args[0];
+         * } else if (args.length == 4) {
+         * typeOfList = args[0];
+         * videoCount = Integer.parseInt(args[1]);
+         * customerCount = Integer.parseInt(args[2]);
+         * requestCount = Integer.parseInt(args[3]);
+         * } else {
+         * System.out.println("INVALID ARGUMENTS");
+         * System.exit(0);
+         * }
+         *
+         * if (typeOfList.equals("SLL")) {
+         * videoSLL = new SLL();
+         * customerSLL = new SLL();
+         * } else if (typeOfList.equals("DLL")) {
+         * videoDList = new DList();
+         * customerDList = new DList();
+         * } else {
+         * System.out.println("INVALID ARGUMENT");
+         * System.exit(0);
+         * }
+         *
          */
-        System.out.print("Type of list... SLL or DLL: ");
-        //typeOfList = sc.nextLine();
-        typeOfList = "SLL";
+        System.out.print("Type of list... SLL or DLL: \n");
+        // typeOfList = sc.nextLine();
+        typeOfList = "DLL";
         int scanInput;
         while (true) {
             printOptions();
@@ -61,7 +60,7 @@ public class VideoStore {
                 case 1 -> {
                     System.out.print("Enter title of video: ");
                     String videoName = sc.nextLine().trim();
-                    setVideoInStore(videoName, createVideoID());
+                    addVideo(videoName, createVideoID());
                 }
                 case 2 -> {
                     System.out.print("Enter ID of video to delete: ");
@@ -83,29 +82,21 @@ public class VideoStore {
                     String customerID = sc.nextLine().trim();
                     if (getCustomer(customerID) != null) {
                         deleteCustomer(customerID);
+                    } else {
+                        System.out.println("Could not delete customer");
                     }
                 }
                 case 5 -> {
                     System.out.print("Enter video id to check for: ");
                     String vidID3 = sc.nextLine().trim();
-                    //System.out.println(checkInStore(vidID3));
-                    if (typeOfList.equals("SLL"))
-                        if (checkInStoreSLL(vidID3)) {
-                            System.out.println("In store");
-                        } else {
-                            System.out.println("Not in store");
-                        }
-                    else if (checkInStoreDLL(vidID3))
-                        System.out.println("In store");
-                    else
-                        System.out.println("Not in store");
+                    checkInStore(vidID3);
                 }
                 case 6 -> {
                     System.out.print("Enter ID of customer: ");
-                    String custID = sc.nextLine().trim();
+                    String customer2ID = sc.nextLine().trim();
                     System.out.print("Enter ID of video: ");
                     String vidID = sc.nextLine().trim();
-                    checkOutVideo(custID, vidID);
+                    checkOutVideo(customer2ID, vidID);
                 }
                 case 7 -> {
                     System.out.print("Enter ID of video: ");
@@ -114,7 +105,7 @@ public class VideoStore {
                 }
                 case 8 -> printAllCustomers();
                 case 9 -> printAllVideos();
-                case 10 -> printInStore2();
+                case 10 -> printInStore();
                 case 11 -> printRented();
                 case 12 -> {
                     System.out.print("Enter ID of customer: ");
@@ -122,10 +113,12 @@ public class VideoStore {
                     if (getCustomer(customerID2) != null)
                         getCustomer(customerID2).printVideos();
                 }
-                case 13 -> System.exit(0);
+                case 13 -> {
+                    sc.close();
+                    System.exit(0);
+                }
             }
         }
-
     }
 
     static void printOptions() {
@@ -148,60 +141,94 @@ public class VideoStore {
                 ===============================""");
     }
 
-    static void setVideoInStore(String movieName, String id) {
-        if (typeOfList.equals("SLL")) {
-            videoSLL.add(new SLNode(new Video(movieName, id), null));
-            storeVideosSLL.add((new SLNode(new Video(movieName, id), null)));
-        } else if (typeOfList.equals("DLL")) {
-            videoDLL.addLast(new DNode(new Video(movieName, id), null, null));
-            storeVideoDLL.addLast(new DNode(new Video(movieName, id), null, null));
-        } else {
-            System.out.println("invalid");
+    /**
+     * Adds a video object to data structure (used 2 lists for ease of use)
+     *
+     * @param movieName the name of movie as a String
+     * @param id        the id that is auto generated and assigned to the movie
+     */
+    static void addVideo(String movieName, String id) {
+        switch (typeOfList) {
+            case "SLL" -> {
+                videoSLL.add(new SLNode(new Video(movieName, id), null));
+                storeVideosSLL.add((new SLNode(new Video(movieName, id), null)));
+            }
+            case "DLL" -> {
+                videoDLL.addLast(new DNode(new Video(movieName, id), null, null));
+                storeVideosDLL.addLast(new DNode(new Video(movieName, id), null, null));
+            }
         }
-
     }
 
-
+    /**
+     * Removes a video object from a data structure
+     *
+     * @param id the id inputted by the user to determine which video to delete
+     */
     static void deleteVideo(String id) {
         switch (typeOfList) {
             case "SLL" -> {
-                storeVideosSLL.delete(id, v);
-                videoSLL.delete(id, v);
+                storeVideosSLL.deleteSLL(id, v);
+                videoSLL.deleteSLL(id, v);
             }
             case "DLL" -> {
-                storeVideoDLL.deleteDLL(id, v);
+                storeVideosDLL.deleteDLL(id, v);
                 videoDLL.deleteDLL(id, v);
             }
         }
     }
 
+    /**
+     * Adds a customer object to a data structure
+     *
+     * @param name the name of the customer to add to data structure
+     * @param id   id number that is auto generated and assigned to a customer
+     */
+    static void addCustomer(String name, String id) {
+        switch (typeOfList) {
+            case "SLL" -> customerSLL.add(new SLNode(new Customer(name, id), null));
+            case "DLL" -> customerDLL.addLast(new DNode(new Customer(name, id), null, null));
+        }
+    }
 
+    /**
+     * Removes a customer object from a data structure
+     *
+     * @param id the id inputted by the user to determine which customer to delete
+     */
     static void deleteCustomer(String id) {
-        if (Objects.equals(typeOfList, "SLL")) {
-            customerSLL.delete(id, c);
-        } else if (Objects.equals(typeOfList, "DLL")) {
-            customerDLL.deleteDLL(id, c);
-        } else {
-            System.out.println("Invalid");
+        switch (typeOfList) {
+            case "SLL" -> customerSLL.deleteSLL(id, c);
+            case "DLL" -> customerDLL.deleteDLL(id, c);
         }
     }
 
+    /**
+     * Prints all video object's data (id and name)
+     */
     static void printAllVideos() {
-        if (typeOfList.equals("SLL")) {
-            videoSLL.print();
-        } else if (typeOfList.equals("DLL")) {
-            videoDLL.print();
+        switch (typeOfList) {
+            case "SLL" -> videoSLL.print();
+            case "DLL" -> videoDLL.print();
         }
     }
 
+    /**
+     * Prints all customer object's data (id and name)
+     */
     static void printAllCustomers() {
-        if (typeOfList.equals("SLL")) {
-            customerSLL.print();
-        } else if (typeOfList.equals("DLL")) {
-            customerDLL.print();
+        switch (typeOfList) {
+            case "SLL" -> customerSLL.print();
+            case "DLL" -> customerDLL.print();
         }
     }
 
+    /**
+     * Return a customer object, used for getting a customer's videos
+     *
+     * @param id the customer's id to check for
+     * @return a customer object whose ID number matches param id
+     */
     private static Customer getCustomer(String id) {
         if (typeOfList.equals("SLL")) {
             return customerSLL.getCustomer(id);
@@ -210,21 +237,17 @@ public class VideoStore {
         }
     }
 
+    /**
+     * Returns a given video from a data structure given an id number
+     *
+     * @param id the video's id to check for
+     * @return a video object whose ID number matches param id
+     */
     private static Video getVideo(String id) {
         if (typeOfList.equals("SLL")) {
             return videoSLL.getVideo(id);
         } else {
             return videoDLL.getVideo(id);
-        }
-    }
-
-    static void addCustomer(String name, String id) {
-        if (typeOfList.equals("SLL")) {
-            customerSLL.add(new SLNode(new Customer(name, id), null));
-        } else if (typeOfList.equals("DLL")) {
-            customerDLL.addLast(new DNode(new Customer(name, id), null, null));
-        } else {
-            System.out.println("invalid");
         }
     }
 
@@ -234,7 +257,7 @@ public class VideoStore {
      *
      * @return a String representation of an id number
      */
-    static String createVideoID() {
+    private static String createVideoID() {
         return String.valueOf(videoIdCounter++);
     }
 
@@ -243,46 +266,52 @@ public class VideoStore {
      *
      * @return a String representation of an id number
      */
-    static String createCustomerID() {
+    private static String createCustomerID() {
         return String.valueOf(customerIdCounter++);
     }
 
-
+    /**
+     * Adds video to a customer's rented list, and removes the video from being in store
+     *
+     * @param customerID the customer's id that is checking out
+     * @param videoID    the video's id that the customer will check out
+     */
     static void checkOutVideo(String customerID, String videoID) {
         switch (typeOfList) {
-            case "SLL":
+            case "SLL" -> {
                 if (getCustomer(customerID).getRentVideoSLL() == null) {
-                    if (storeVideosSLL.delete(videoID, v)) {
+                    if (storeVideosSLL.deleteSLL(videoID, v)) {
                         getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
-
                 } else {
-                    if (storeVideosSLL.delete(videoID, v)) {
+                    if (storeVideosSLL.deleteSLL(videoID, v)) {
                         getCustomer(customerID).addRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
                 }
-                break;
-            case "DLL":
+            }
+            case "DLL" -> {
                 if (getCustomer(customerID).getRentVideoDLL() == null) {
-                    if (storeVideoDLL.deleteDLL(videoID, v)) {
+                    if (storeVideosDLL.deleteDLL(videoID, v)) {
                         getCustomer(customerID).createAndAddRentDLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
-                        //getVideo(videoID).setAvailable(false);
-
                     }
                 } else {
-                    if (storeVideoDLL.deleteDLL(videoID, v)) {
+                    if (storeVideosDLL.deleteDLL(videoID, v)) {
                         getCustomer(customerID).addRentDLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
                 }
-                break;
+            }
         }
     }
 
-
+    /**
+     * Adds the video back to being in store, and removes it from customer's rented list if they possess the video
+     *
+     * @param videoID the video's id to check in/ return to store
+     */
     static void checkInVideo(String videoID) {
         if (typeOfList.equals("SLL")) {
             for (int i = 0; i < customerIdCounter; i++) {
@@ -296,7 +325,7 @@ public class VideoStore {
             for (int i = 0; i < customerIdCounter; i++) {
                 if (getCustomer(String.valueOf(i)).getRentVideoDLL() != null && !getVideo(videoID).isAvailable()) {
                     getCustomer(String.valueOf(i)).removeRentDLL(getVideo(videoID));
-                    storeVideoDLL.addLast((new DNode(new Video(getVideo(videoID).getTitle(), videoID), null, null)));
+                    storeVideosDLL.addLast((new DNode(new Video(getVideo(videoID).getTitle(), videoID), null, null)));
                     getVideo(videoID).setAvailable(true);
                 }
             }
@@ -304,24 +333,32 @@ public class VideoStore {
         }
     }
 
+    /**
+     * Prints all videos that are currently being rented out
+     */
     static void printRented() {
         for (int i = 0; i < customerIdCounter; i++) {
-            //System.out.println(getCustomer(String.valueOf(i)).getRentVideoSLL().);
             getCustomer(String.valueOf(i)).printVideos();
         }
-
     }
 
-    static void printInStore2() {
-        if (typeOfList.equals("SLL")) {
-            storeVideosSLL.print();
-        } else if (typeOfList.equals("DLL")) {
-            storeVideoDLL.print();
+    /**
+     * Prints all videos that are currently not being rented out
+     */
+    static void printInStore() {
+        switch (typeOfList) {
+            case "SLL" -> storeVideosSLL.print();
+            case "DLL" -> storeVideosDLL.print();
         }
     }
 
-
-    static boolean checkInStoreSLL(String id) {
+    /**
+     * Checks for a SLNode matching the video's id that is in store
+     *
+     * @param id video's id to check for
+     * @return boolean if the video is not currently being rented
+     */
+    private static boolean checkInStoreSLL(String id) {
         SLNode current = storeVideosSLL.getHead();
         Video v;
         if (current == null) {
@@ -344,8 +381,14 @@ public class VideoStore {
 
     }
 
-    static boolean checkInStoreDLL(String id) {
-        DNode current = storeVideoDLL.getHeader();
+    /**
+     * Checks for a DNode matching the video's id that is in store
+     *
+     * @param id video's id to check for
+     * @return boolean if the video is not currently being rented
+     */
+    private static boolean checkInStoreDLL(String id) {
+        DNode current = storeVideosDLL.getHeader();
         Video v;
         if (current == null) {
             return false;
@@ -356,7 +399,6 @@ public class VideoStore {
             if (Objects.equals(v.getId(), id)) {
                 return true;
             } else {
-                //v = (Video) current.getElement();
                 current = current.getNext();
                 if (current != null) {
                     v = (Video) current.getElement();
@@ -368,4 +410,22 @@ public class VideoStore {
 
     }
 
+    /**
+     * If the data structure is an SLL, it checks for a SLNode matching the video's properties; likewise for DLL
+     *
+     * @param id the video's id to check if in stock
+     */
+    static void checkInStore(String id) {
+        if (typeOfList.equals("SLL")) {
+            if (checkInStoreSLL(id))
+                System.out.println("In store");
+            else
+                System.out.println("Not in store");
+        } else if (typeOfList.equals("DLL")) {
+            if (checkInStoreDLL(id))
+                System.out.println("In store");
+            else
+                System.out.println("Not in store");
+        }
+    }
 }

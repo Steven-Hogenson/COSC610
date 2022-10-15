@@ -33,7 +33,6 @@ public class Video {
     }
 
 
-
     @Override
     public String toString() {
         return "[" + id + "] " + title;
