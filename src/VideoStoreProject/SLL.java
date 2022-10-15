@@ -1,5 +1,7 @@
 package VideoStoreProject;
 
+import java.util.Objects;
+
 /**
  * @author Steven Hogenson on 10/3/2022
  */
@@ -48,7 +50,6 @@ public class SLL {
             }
             current.setNext(n);
         }
-
     }
 
     /**
@@ -86,7 +87,6 @@ public class SLL {
             if (v.getId().equals(id)) {
                 return v;
             }
-            //
             current = current.getNext();
             if (current != null) {
                 v = (Video) current.getElement();
@@ -105,22 +105,18 @@ public class SLL {
         if (getHead() == null) {
             return null;
         }
-
         SLNode current = head;
         Customer v = (Customer) current.getElement();
         while (current != null) {
             if (v.getId().equals(id)) {
                 return v;
             }
-            //
             current = current.getNext();
             if (current != null) {
                 v = (Customer) current.getElement();
             }
-
         }
         return null;
-
     }
 
     /**
@@ -149,7 +145,6 @@ public class SLL {
                     return false;
                 }
             }
-
             if (temp != null) {
                 temp.setNext(current.getNext());
             }
@@ -175,7 +170,6 @@ public class SLL {
             }
 
             return true;
-
         }
         return false;
     }
@@ -199,5 +193,31 @@ public class SLL {
         }
         setHead(previous);
     }
-
+    /**
+     * Checks for a SLNode matching the video's id that is in store
+     *
+     * @param id video's id to check for
+     * @return boolean if the video is not currently being rented
+     */
+    public static boolean checkInStoreSLL(String id, SLNode s) {
+        SLNode current = s;
+        Video v;
+        if (current == null) {
+            return false;
+        } else {
+            v = (Video) current.getElement();
+        }
+        while (true) {
+            if (Objects.equals(v.getId(), id)) {
+                return true;
+            } else {
+                current = current.getNext();
+                if (current != null) {
+                    v = (Video) current.getElement();
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
 }

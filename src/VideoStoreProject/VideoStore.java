@@ -359,26 +359,7 @@ public class VideoStore {
      * @return boolean if the video is not currently being rented
      */
     private static boolean checkInStoreSLL(String id) {
-        SLNode current = storeVideosSLL.getHead();
-        Video v;
-        if (current == null) {
-            return false;
-        } else {
-            v = (Video) current.getElement();
-        }
-        while (true) {
-            if (Objects.equals(v.getId(), id)) {
-                return true;
-            } else {
-                current = current.getNext();
-                if (current != null) {
-                    v = (Video) current.getElement();
-                } else {
-                    return false;
-                }
-            }
-        }
-
+        return storeVideosSLL.checkInStoreSLL(id, storeVideosSLL.getHead());
     }
 
     /**
@@ -388,26 +369,7 @@ public class VideoStore {
      * @return boolean if the video is not currently being rented
      */
     private static boolean checkInStoreDLL(String id) {
-        DNode current = storeVideosDLL.getHeader();
-        Video v;
-        if (current == null) {
-            return false;
-        } else {
-            v = (Video) current.getElement();
-        }
-        while (true) {
-            if (Objects.equals(v.getId(), id)) {
-                return true;
-            } else {
-                current = current.getNext();
-                if (current != null) {
-                    v = (Video) current.getElement();
-                } else {
-                    return false;
-                }
-            }
-        }
-
+        return storeVideosDLL.checkInStoreDLL(id, storeVideosDLL.getHeader());
     }
 
     /**

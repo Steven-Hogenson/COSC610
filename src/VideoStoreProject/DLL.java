@@ -1,5 +1,7 @@
 package VideoStoreProject;
 
+import java.util.Objects;
+
 /**
  * @author Steven Hogenson on 10/3/2022
  */
@@ -210,5 +212,33 @@ public class DLL {
 
         }
         return null;
+    }
+
+    /**
+     * Checks for a DNode matching the video's id that is in store
+     *
+     * @param id video's id to check for
+     * @return boolean if the video is not currently being rented
+     */
+    public static boolean checkInStoreDLL(String id, DNode d) {
+        DNode current = d;
+        Video v;
+        if (current == null) {
+            return false;
+        } else {
+            v = (Video) current.getElement();
+        }
+        while (true) {
+            if (Objects.equals(v.getId(), id)) {
+                return true;
+            } else {
+                current = current.getNext();
+                if (current != null) {
+                    v = (Video) current.getElement();
+                } else {
+                    return false;
+                }
+            }
+        }
     }
 }
