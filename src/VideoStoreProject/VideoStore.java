@@ -264,11 +264,10 @@ public class VideoStore {
      * @return a customer object whose ID number matches param id
      */
     private static Customer getCustomer(String id) {
-        if (typeOfList.equals("SLL")) {
+        if (typeOfList.equals("SLL"))
             return customerSLL.getCustomer(id);
-        } else {
+        else
             return customerDLL.getCustomer(id);
-        }
     }
 
     /**
@@ -278,11 +277,10 @@ public class VideoStore {
      * @return a video object whose ID number matches param id
      */
     private static Video getVideo(String id) {
-        if (typeOfList.equals("SLL")) {
+        if (typeOfList.equals("SLL"))
             return videoSLL.getVideo(id);
-        } else {
+        else
             return videoDLL.getVideo(id);
-        }
     }
 
     /**
@@ -362,7 +360,6 @@ public class VideoStore {
                     getVideo(videoID).setAvailable(true);
                 }
             }
-
         }
     }
 
@@ -370,9 +367,8 @@ public class VideoStore {
      * Prints all videos that are currently being rented out
      */
     static void printRented() {
-        for (int i = 0; i < customerIdCounter; i++) {
+        for (int i = 0; i < customerIdCounter; i++)
             getCustomer(String.valueOf(i)).printVideos();
-        }
     }
 
     /**
