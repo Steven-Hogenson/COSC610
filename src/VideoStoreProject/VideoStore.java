@@ -137,13 +137,11 @@ public class VideoStore {
                 if (operation == 5) {
                     int searchRandomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
                     checkInStore(String.valueOf(searchRandomVideo));
-                }
-                if (operation == 6) {
+                } else if (operation == 6) {
                     int randomCustomer = ThreadLocalRandom.current().nextInt(0, customerCount);
                     int randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
                     checkOutVideo(String.valueOf(randomCustomer), String.valueOf(randomVideo));
-                }
-                if (operation == 7) {
+                } else {
                     int randomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
                     checkInVideo(String.valueOf(randomVideo));
                 }
