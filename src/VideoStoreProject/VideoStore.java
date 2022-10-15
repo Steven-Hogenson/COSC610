@@ -132,8 +132,9 @@ public class VideoStore {
                 int randomInt = ThreadLocalRandom.current().nextInt(5, 8);
                 operationStack.push(randomInt);
             }
-            //start time
+
             int operation, randomVideo, randomCustomer;
+            //start time
             long startTime = System.nanoTime();
             while (operationStack.size() > 0) {
                 operation = operationStack.pop();
