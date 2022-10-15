@@ -26,7 +26,7 @@ public class VideoStore {
         int videoCount = 0;
         int customerCount = 0;
         int transactionCount = 0;
-
+        //check length of args in order to set values appropriately
         if (args.length == 1) {
             typeOfList = args[0];
         } else if (args.length == 4) {
@@ -38,7 +38,7 @@ public class VideoStore {
             System.out.println("INVALID ARGUMENTS");
             System.exit(0);
         }
-
+        //checks args[0] for the type of list to use for the program, and initializes respective objects
         if (typeOfList.equals("SLL")) {
             videoSLL = new SLL();
             customerSLL = new SLL();
@@ -51,7 +51,7 @@ public class VideoStore {
             System.out.println("INVALID ARGUMENT");
             System.exit(0);
         }
-
+        //if there is no automatic populating (only type of list was specified)
         if (args.length == 1) {
             int scanInput;
             while (true) {
@@ -120,11 +120,14 @@ public class VideoStore {
                 }
             }
         } else {
+            //automatic populating with the specified args values
+            //populate lists and operationStack
             for (int i = 0; i < videoCount; i++)
                 addVideo("Video Name: " + i, String.valueOf(i));
             for (int i = 0; i < customerCount; i++)
                 addCustomer("Customer Name: " + i, String.valueOf(i));
             Stack<Integer> operationStack = new Stack<>();
+            //operationStack is populated with random ints 5, 6, and 7 for the relevant actions/method calls
             for (int i = 0; i < transactionCount; i++) {
                 int randomInt = ThreadLocalRandom.current().nextInt(5, 8);
                 operationStack.push(randomInt);
@@ -133,7 +136,6 @@ public class VideoStore {
             long startTime = System.nanoTime();
             while (operationStack.size() > 0) {
                 int operation = operationStack.pop();
-
                 if (operation == 5) {
                     int searchRandomVideo = ThreadLocalRandom.current().nextInt(0, videoCount);
                     checkInStore(String.valueOf(searchRandomVideo));
