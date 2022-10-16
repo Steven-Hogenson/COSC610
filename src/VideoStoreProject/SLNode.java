@@ -12,7 +12,6 @@ public class SLNode {
         this.next = next;
     }
 
-
     public Object getElement() {
         return element;
     }
@@ -21,7 +20,6 @@ public class SLNode {
         return next;
     }
 
-
     public void setElement(Object element) {
         this.element = element;
     }
@@ -29,8 +27,6 @@ public class SLNode {
     public void setNext(SLNode next) {
         this.next = next;
     }
-
-
 
 
 }

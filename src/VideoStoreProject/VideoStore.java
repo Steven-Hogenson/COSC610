@@ -10,12 +10,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class VideoStore {
 
     private static String typeOfList = "";
-    static SLL videoSLL;
-    static SLL storeVideosSLL;
-    static SLL customerSLL;
-    static DLL videoDLL;
-    static DLL storeVideosDLL;
-    static DLL customerDLL;
+    private static SLL videoSLL;
+    private static SLL storeVideosSLL;
+    private static SLL customerSLL;
+    private static DLL videoDLL;
+    private static DLL storeVideosDLL;
+    private static DLL customerDLL;
     private static long videoIdCounter = 0;
     private static long customerIdCounter = 0;
     private static final Video v = new Video("", "");
@@ -25,7 +25,7 @@ public class VideoStore {
         Scanner sc = new Scanner(System.in);
         int videoCount = 0;
         int customerCount = 0;
-        int transactionCount = 0;
+        int operationCount = 0;
         //check length of args in order to set values appropriately
         if (args.length == 1) {
             typeOfList = args[0];
@@ -33,7 +33,7 @@ public class VideoStore {
             typeOfList = args[0];
             videoCount = Integer.parseInt(args[1]);
             customerCount = Integer.parseInt(args[2]);
-            transactionCount = Integer.parseInt(args[3]);
+            operationCount = Integer.parseInt(args[3]);
         } else {
             System.out.println("INVALID ARGUMENTS");
             System.exit(0);
@@ -128,8 +128,9 @@ public class VideoStore {
                 addCustomer("Customer Name: " + i, String.valueOf(i));
             Stack<Integer> operationStack = new Stack<>();
             //operationStack is populated with random ints 5, 6, and 7 for the relevant actions/method calls
-            for (int i = 0; i < transactionCount; i++) {
-                int randomInt = ThreadLocalRandom.current().nextInt(5, 8);
+            int randomInt;
+            for (int i = 0; i < operationCount; i++) {
+                randomInt = ThreadLocalRandom.current().nextInt(5, 8);
                 operationStack.push(randomInt);
             }
 
@@ -186,7 +187,7 @@ public class VideoStore {
         switch (typeOfList) {
             case "SLL" -> {
                 videoSLL.add(new SLNode(new Video(movieName, id), null));
-                storeVideosSLL.add((new SLNode(new Video(movieName, id), null)));
+                storeVideosSLL.add(new SLNode(new Video(movieName, id), null));
             }
             case "DLL" -> {
                 videoDLL.addLast(new DNode(new Video(movieName, id), null, null));
