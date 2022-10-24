@@ -5,7 +5,7 @@ import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * @author Steven Hogenson on 10/4/2022
+ * @author Steven Hogenson on 10/16/2022
  */
 public class VideoStore {
 
@@ -57,6 +57,10 @@ public class VideoStore {
             while (true) {
                 printOptions();
                 scanInput = Integer.parseInt(sc.nextLine());
+                while (!String.valueOf(scanInput).matches("[1-9]|1[0-3]")) {
+                    System.out.println("Input must be numbers between 1-13. Try again.");
+                    scanInput = Integer.parseInt(sc.nextLine());
+                }
 
                 switch (scanInput) {
                     case 1 -> {
@@ -312,26 +316,26 @@ public class VideoStore {
     static void checkOutVideo(String customerID, String videoID) {
         switch (typeOfList) {
             case "SLL" -> {
-                if (getCustomer(customerID).getRentVideoSLL() == null) {
+                if (getCustomer(customerID) != null && getCustomer(customerID).getRentVideoSLL() == null) {
                     if (storeVideosSLL.deleteSLL(videoID, v)) {
                         getCustomer(customerID).createAndAddRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
                 } else {
-                    if (storeVideosSLL.deleteSLL(videoID, v)) {
+                    if (getCustomer(customerID) != null && storeVideosSLL.deleteSLL(videoID, v)) {
                         getCustomer(customerID).addRentSLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
                 }
             }
             case "DLL" -> {
-                if (getCustomer(customerID).getRentVideoDLL() == null) {
+                if (getCustomer(customerID) != null && getCustomer(customerID).getRentVideoDLL() == null) {
                     if (storeVideosDLL.deleteDLL(videoID, v)) {
                         getCustomer(customerID).createAndAddRentDLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
                 } else {
-                    if (storeVideosDLL.deleteDLL(videoID, v)) {
+                    if (getCustomer(customerID) != null && storeVideosDLL.deleteDLL(videoID, v)) {
                         getCustomer(customerID).addRentDLL(getVideo(videoID));
                         getVideo(videoID).setAvailable(false);
                     }
